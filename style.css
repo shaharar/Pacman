@@ -27,14 +27,123 @@ a{
     text-decoration: none;
 }
 
+
 content{
 	position: absolute;
 	top: 20%;
 	left: 0px;
 	width: 100%;
 	height: 75%;
-	background-color: plum;
 }
+
+#welcome{
+	visibility: hidden;
+	position: absolute;
+	top: 0%;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background-image:url("images/wallpaper.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+button{
+	position: absolute;
+	background-color: white;
+	color: black;
+	text-align: center;
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	font-size: 40px;
+	width: 15%;
+	height: 10%;
+	border-radius: 12px;
+
+}
+
+#registerBtn{
+	top: 35%;
+	left: 5%;
+}
+
+#loginBtn{
+	top: 50%;
+	left: 5%;
+}
+
+#game{
+	visibility: hidden;
+}
+
+/* Add padding to containers */
+.regContainer {
+	position: absolute;
+	top: 10%;
+	left: 35%;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+  }
+  
+  /* Full-width input fields */
+  input[type=text], input[type=password], input[type=date] {
+	width: 25%;
+	height: 4%;
+	display: block;
+	border: 1px solid #ccc;
+	background: #f1f1f1;
+	font-family: open sans-serif;
+	box-sizing: border-box;
+  }
+  
+  input[type=text]:focus, input[type=password]:focus, input[type=date]:focus  {
+	background-color: #ddd;
+	outline: none;
+  }
+
+  h1{
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  }
+
+  
+  /* Set a style for the submit button */
+  .submitBtn {
+	background-color: rgb(127, 185, 129);
+	color: white;	
+	border: none;
+	cursor: pointer;
+	width: 10%;
+	left: 5%;
+  }
+  
+  .submitBtn:hover {
+	opacity: 1;
+  }
+    
+  .logContainer {
+	position: absolute;
+	top: 10%;
+	left: 40%;
+	width: 100%;
+	height: 100%;
+	background-color: white;  }
+
+	h2{
+		text-align: center;
+		font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	  }
+
+  /* image in Login window */
+  /* .imgcontainer {
+	text-align: center;
+	margin: 24px 0 12px 0;
+  }
+  
+  img.avatar {
+	width: 40%;
+	border-radius: 50%;
+  } */
 
 
 footer{

@@ -2,30 +2,80 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.1.0.js"></script> -->
 </head>
 
 <body>
         <header>
+            
         </header>
         <nav>
-            <li><a href="#welcome">Welcome</a></li>
-            <li><a href="#register">Register</a></li>
-            <li><a href="#login">Login</a></li>
-            <li><a href="#settings">Settings</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="#welcome" onclick="showWindow('welcome')">Welcome</a></li>
+            <li><a href="#register" onclick="showWindow('register')">Register</a></li>
+            <li><a href="#login" onclick="showWindow('login')">Login</a></li>
+            <li><a href="#settings" onclick="showWindow('settings')">Settings</a></li>
+            <li><a href="#about" onclick="showWindow('about')">About</a></li>
         </nav>
         <content>
             <div id="welcome">
-
+                    <button type="button" id="registerBtn" onclick="showWindow('register')">Register</button>
+                    <button type="button" id="loginBtn"onclick="showWindow('login')">Log in</button>
             </div>
             <div id="register">
-                
+                <!-- w3school -->
+                    <form action=script:submit() >
+                        <div class="regContainer">
+                          <h1>Register</h1>
+                          <p>Please fill in this form to create an account:</p>
+                        
+                          <label for="username"><b>Username</b></label>
+                          <input type="text" placeholder="Enter Username" name="username" required>
+                      
+                          <label for="psw"><b>Password</b></label>
+                          <input type="password" placeholder="Enter Password" name="psw" required>
+                      
+                          <label for="psw-repeat"><b>Repeat Password</b></label>
+                          <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+
+                          <label for="firstName"><b>First Name</b></label>
+                          <input type="text" placeholder="Enter First Name" name="firstName" required>
+
+                          <label for="lastName"><b>Last Name</b></label>
+                          <input type="text" placeholder="Enter Last Name" name="lastName" required>
+
+                          <label for="email"><b>Email</b></label>
+                          <input type="text" placeholder="Enter Email" name="email" required>
+
+                          <label for="birthDate"><b>Birth Date</b></label>
+                          <input type="date" placeholder="Enter Birth Date" name="birthDate" required>
+                                                
+                          <button type="submit" class="submitBtn">Submit</button>
+                        </div>
+                      </form>
             </div>
             <div id="login">
-                
+                <!-- w3school -->                
+                <form action="script:loginValdiation()">
+                    <h2>Login</h2>
+                    <!-- image on login -->
+                    <!-- <div class="imgcontainer">
+                        <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                    </div> -->
+
+                    <div class="logContainer">
+                        <label for="username"><b>Username</b></label>
+                        <input type="text" id="loginUsername" placeholder="Enter Username" name="username" required>
+                        <label for="psw"><b>Password</b></label>
+                        <input type="password" id="loginPsw" placeholder="Enter Password" name="psw" required>
+                        <button type="submit" class="submitBtn" onclick="loginValidation()">Login</button>
+                    </div>
+                </form>
             </div>
-            <div id="settings">
+
+            <div id="settings"> 
                 
             </div>
             <div id="about">
@@ -33,17 +83,17 @@
             </div>
             <div id="game">
                 SCORE:
-<input id="lblScore" type="text"/>
-<br/>
-TIME:
-<input id="lblTime" type="text"/>
-<br/>
-<canvas id="canvas" height="600" width="600"></canvas>
- </div>
-</content>
-<footer>
-    footer
-</footer>
+                <input id="lblScore" type="text"/>
+                <br/>
+                TIME:
+                <input id="lblTime" type="text"/>
+                <br/>
+                <!-- <canvas id="canvas" height="600" width="600"></canvas> -->
+                </div>
+        </content>
+        <footer>
+            footer
+        </footer>
 <script type="text/javascript" src="script.js"></script>
 </body>
 

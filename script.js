@@ -6,6 +6,8 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var usersMap = new Map();
+usersMap.set('a','a');
 
 Start();
 
@@ -158,4 +160,52 @@ function UpdatePosition() {
     } else {
         Draw();
     }
+}
+
+function submit(){
+
+}
+
+function showWindow(id){
+    hideAllWindows();
+    $("#"+id).show();
+}
+
+function hideAllWindows(){
+    $("#welcome").hide();
+    $("#register").hide();
+    $("#login").hide();
+    $("#settings").hide();
+    $("#about").hide();
+    $("#game").hide();
+}
+
+function loginValidation(){
+    let username=document.getElementById('loginUsername').value;
+    let password=document.getElementById('loginPsw').value;
+
+    if(!username){
+        alert("Please enter your username");
+    }
+
+    else if(!password){
+        alert("Please enter your password");
+    }
+
+    else{
+        if (!usersMap.has('username')){
+            alert("Invalid username");
+        }
+        else{
+            if(!password==usersMap.get('username')){
+                alert("Incorrect password"); 
+            }
+            else{
+                showWindow('game');
+            }
+        }
+    }
+
+    document.getElementById('loginUsername').value="";
+    document.getElementById('loginPsw').value="";
 }
