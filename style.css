@@ -24,3 +24,13 @@ li{
 a{
     text-decoration: none;
 }
+
+#game{
+	position: absolute;
+	top: 200px;
+}
+
+footer{
+	position: absolute;
+	top: 900px;
+}
