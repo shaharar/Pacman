@@ -2,7 +2,7 @@
 
 header{
     position: absolute;
-    color: pink;
+    color: blue;
 	top: 0px;
 	left: 0px;
 	width: 800px;
@@ -23,4 +23,14 @@ li{
 
 a{
     text-decoration: none;
+}
+
+#game{
+	position: absolute;
+	top: 200px;
+}
+
+footer{
+	position: absolute;
+	top: 900px;
 }
