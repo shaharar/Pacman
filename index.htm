@@ -67,15 +67,28 @@
 
                     <div class="logContainer">
                         <label for="username"><b>Username</b></label>
-                        <input type="text" id="loginUsername" placeholder="Enter Username" name="username" required>
+                        <input type="text" id="loginUsername" placeholder="Enter Username" name="username" >
                         <label for="psw"><b>Password</b></label>
-                        <input type="password" id="loginPsw" placeholder="Enter Password" name="psw" required>
+                        <input type="password" id="loginPsw" placeholder="Enter Password" name="psw" >
                         <button type="submit" class="submitBtn" onclick="loginValidation()">Login</button>
                     </div>
                 </form>
             </div>
 
             <div id="settings"> 
+
+                <p>choose keyboard keys to control pacman's movement:</p>
+                    <label for="upKey"><b>UP key</b></label>
+                    <input type="text" id="upKey" placeholder="Press any key" name="upKey" onkeyup="setUpKey(event)"> 
+
+                    <label for="downKey"><b>DOWN key</b></label>
+                    <input type="text" id="downKey" placeholder="Press any key" name="downKey" onkeyup="setDownKey(event)"> 
+
+                    <label for="leftKey"><b>LEFT key</b></label>
+                    <input type="text" id="leftKey" placeholder="Press any key" name="leftKey" onkeyup="setLeftKey(event)"> 
+
+                    <label for="rightKey"><b>Right key</b></label>
+                    <input type="text" id="rightKey" placeholder="Press any key" name="rightKey" onkeyup="setRightKey(event)"> 
                 
             </div>
             <div id="about">

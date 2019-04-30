@@ -246,3 +246,23 @@ $(document).keydown(function(event) {
         }
   });
 }
+
+function setUpKey(event){
+    var inputVal = event.key;
+    document.getElementById('upKey').value=inputVal;
+}
+
+function setDownKey(event){
+    var inputVal = event.key;
+    document.getElementById('downKey').value=inputVal;
+}
+
+function setLeftKey(event){
+    var inputVal = event.key;
+    document.getElementById('leftKey').value=inputVal;
+}
+
+function setRightKey(event){
+    var inputVal = event.key;
+    document.getElementById('rightKey').value=inputVal;
+}

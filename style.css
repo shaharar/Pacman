@@ -73,7 +73,7 @@ button{
 }
 
 #game{
-	visibility: hidden;
+	/* visibility: hidden; */
 }
 
 /* Add padding to containers */
