@@ -2,19 +2,23 @@ var context = canvas.getContext("2d");
 var shape = new Object();
 var board;
 var score;
+var lives;
 var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
 var usersMap = new Map();
 usersMap.set('a',"a");
+var lastDirection;
 
 Start();
 
 function Start() {
     board = new Array();
     score = 0;
+    lives = 3;
     pac_color = "yellow";
+    lastDirection = 0;
     var cnt = 100;
     var food_remain = 50;
     var pacman_remain = 1;
@@ -86,10 +90,16 @@ function GetKeyPressed() {
     }
 }
 
-function Draw() {
+function Draw(direction) {
+    if (direction === 0){ 
+        if (lastDirection !== 0){
+            direction = lastDirection;
+        }
+    }
     context.clearRect(0, 0, canvas.width, canvas.height); //clean board
     lblScore.value = score;
     lblTime.value = time_elapsed;
+    lblLife.value = lives;
     for (var i = 0; i < 10; i++) {
         for (var j = 0; j < 10; j++) {
             var center = new Object();
@@ -97,12 +107,33 @@ function Draw() {
             center.y = j * 60 + 30;
             if (board[i][j] === 2) {
                 context.beginPath();
-                context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+                if (direction === 0) { //no key pressed
+                    context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI);
+                }
+                else if (direction === 1) { //up
+                    context.arc(center.x, center.y, 30, 1.65 * Math.PI, 1.35 * Math.PI);
+                }
+                else if (direction === 2) { //down
+                    context.arc(center.x, center.y, 30, 0.65 * Math.PI, 0.35 * Math.PI);
+                }
+                else if (direction === 3) { //left
+                    context.arc(center.x, center.y, 30, 1.15 * Math.PI, 0.85 * Math.PI);
+                }
+                else if (direction === 4) { //right
+                    context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI);
+                }
+                lastDirection = direction;
                 context.lineTo(center.x, center.y);
                 context.fillStyle = pac_color; //color
                 context.fill();
                 context.beginPath();
-                context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
+                // set the eye of the pacman according to the direction
+                if (direction === 1 || direction === 2) { //up or down
+                    context.arc(center.x + 12, center.y - 5, 5, 0, 2 * Math.PI); // circle
+                }
+                else { //left or right
+                    context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
+                }
                 context.fillStyle = "black"; //color
                 context.fill();
             } else if (board[i][j] === 1) {
@@ -130,20 +161,23 @@ function UpdatePosition() {
             shape.j--;
         }
     }
-    if (x === 2) {
+    else if (x === 2) {
         if (shape.j < 9 && board[shape.i][shape.j + 1] !== 4) {
             shape.j++;
         }
     }
-    if (x === 3) {
+    else if (x === 3) {
         if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
             shape.i--;
         }
     }
-    if (x === 4) {
+    else if (x === 4) {
         if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4) {
             shape.i++;
         }
+    }
+    else {
+        x = 0;
     }
     if (board[shape.i][shape.j] === 1) {
         score++;
@@ -158,7 +192,7 @@ function UpdatePosition() {
         window.clearInterval(interval);
         window.alert("Game completed");
     } else {
-        Draw();
+        Draw(x);
     }
 }
 
