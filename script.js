@@ -10,11 +10,14 @@ var interval;
 var usersMap = new Map();
 usersMap.set('a',"a");
 var lastDirection;
-var currUser;
+var gameTime;
+var reward = {x:0, y:0};
 
 Start();
 
 function Start() {
+    hideAllWindows();
+    showWindow('welcome');
     board = new Array();
     score = 0;
     lives = 3;
@@ -28,7 +31,8 @@ function Start() {
         board[i] = new Array();
         //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
         for (var j = 0; j < 10; j++) {
-            if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
+            if ((i === 0 && j === 2) || (i === 0 && j === 3) || (i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) ||
+             (i === 6 && j === 2) || (i === 4 && j === 8) || (i === 5 && j === 8) || (i === 6 && j === 8) || (i === 7 && j === 8) || (i === 8 && j === 5) || (i === 9 && j === 5)) {
                 board[i][j] = 4;
             } else {
                 var randomNum = Math.random();
@@ -47,6 +51,7 @@ function Start() {
             }
         }
     }
+    board[0][0] = 5; //start position of reward
     while (food_remain > 0) {
         var emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 1;
@@ -123,11 +128,11 @@ function Draw(direction) {
                 else if (direction === 4) { //right
                     context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI);
                 }
-                lastDirection = direction;
                 context.lineTo(center.x, center.y);
                 context.fillStyle = pac_color; //color
                 context.fill();
                 context.beginPath();
+                lastDirection = direction;
                 // set the eye of the pacman according to the direction
                 if (direction === 1 || direction === 2) { //up or down
                     context.arc(center.x + 12, center.y - 5, 5, 0, 2 * Math.PI); // circle
@@ -147,43 +152,60 @@ function Draw(direction) {
                 context.rect(center.x - 30, center.y - 30, 60, 60);
                 context.fillStyle = "grey"; //color
                 context.fill();
+            } else if (board[i][j] === 5) {
+                drawReward();
+                updateRewardPosition();
             }
         }
     }
-
-
 }
 
 function UpdatePosition() {
     board[shape.i][shape.j] = 0;
     var x = GetKeyPressed();
+    //up
     if (x === 1) {
         if (shape.j > 0 && board[shape.i][shape.j - 1] !== 4) {
             shape.j--;
         }
     }
+    //down
     else if (x === 2) {
         if (shape.j < 9 && board[shape.i][shape.j + 1] !== 4) {
             shape.j++;
         }
     }
+    //right
     else if (x === 3) {
         if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
             shape.i--;
         }
     }
+    //left
     else if (x === 4) {
         if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4) {
             shape.i++;
         }
     }
+    //no movement
     else {
         x = 0;
     }
     if (board[shape.i][shape.j] === 1) {
+        //check which kind of ball the pacman ate
+        // if (){
+        //     score += 5;
+        // }
+        // else if (){
+        //     score += 15;
+        // }
+        // else if (){
+        //     score += 25;
+        // }
         score++;
     }
     board[shape.i][shape.j] = 2;
+    //board[reward.x][reward.y] = 5;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
     if (score >= 20 && time_elapsed <= 10) {
@@ -192,14 +214,22 @@ function UpdatePosition() {
     if (score === 50) {
         window.clearInterval(interval);
         window.alert("Game completed");
-    } else {
+    }
+    // if (time_elapsed === gameTime){
+    //     if (score < 150){
+    //         window.clearInterval(interval);
+    //         window.alert("You can do better");
+    //     }
+    //     else{
+    //         window.clearInterval(interval);
+    //         window.alert("We have a Winner!!!");
+    //     }
+    // }
+    else {
         Draw(x);
     }
 }
 
-function submit(){
-
-}
 
 function showWindow(id){
     if (id !== "about"){
@@ -243,7 +273,7 @@ function loginValidation(){
             }
             else{
                 lblUsername.value = username;
-                showWindow('game');
+                showWindow('settings');
             }
         }
     }
@@ -251,7 +281,6 @@ function loginValidation(){
     document.getElementById('loginUsername').value="";
     document.getElementById('loginPsw').value="";
 }
-
 
 function about(){
     // Get the modal
@@ -301,4 +330,31 @@ function setLeftKey(event){
 function setRightKey(event){
     var inputVal = event.key;
     document.getElementById('rightKey').value=inputVal;
+}
+
+function drawReward () {
+    context.beginPath();
+    context.rect(reward.x, reward.y, 60, 60);
+    context.fillStyle = "pink"; //color
+    context.fill();
+}
+
+function updateRewardPosition() {
+    var emptyCell = findRandomEmptyCell(board);
+    reward.x = emptyCell[0];
+    reward.y = emptyCell[1];
+  //  board[reward.x][reward.y] = 5;
+}
+
+function setGameSettings () {
+    //set the total time for the game
+   // gameTime = document.getElementById('gameDuration').value;
+   gameTime = 30;
+
+    //set colors of food balls
+
+
+    //set keys
+
+    window.alert("Your settings were saved");
 }
