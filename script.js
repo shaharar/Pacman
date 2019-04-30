@@ -10,6 +10,7 @@ var interval;
 var usersMap = new Map();
 usersMap.set('a',"a");
 var lastDirection;
+var currUser;
 
 Start();
 
@@ -241,6 +242,7 @@ function loginValidation(){
                 alert("Incorrect password"); 
             }
             else{
+                lblUsername.value = username;
                 showWindow('game');
             }
         }
