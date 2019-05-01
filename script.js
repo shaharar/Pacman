@@ -7,6 +7,7 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var rewardInterval;
 var usersMap = new Map();
 usersMap.set('a',"a");
 var lastDirection;
@@ -53,11 +54,11 @@ function Start() {
                 if (randomNum <= 1.0 * food_remain / cnt) {
                     food_remain--;
                     board[i][j] = 1;
-                } else if (randomNum < 1.0 * (pacman_remain + food_remain) / cnt) {
-                    shape.i = i;
-                    shape.j = j;
-                    pacman_remain--;
-                    board[i][j] = 2;
+                // } else if (randomNum < 1.0 * (pacman_remain + food_remain) / cnt) {
+                //     shape.i = i;
+                //     shape.j = j;
+                //     pacman_remain--;
+                //     board[i][j] = 2;
                 } else {
                     board[i][j] = 0;
                 }
@@ -65,7 +66,14 @@ function Start() {
             }
         }
     }
-    board[0][0] = 5; //start position of reward
+
+    //initialize pacman position
+    var emptyCell = findRandomEmptyCell(board);
+        board[emptyCell[0]][emptyCell[1]] = 2;
+        shape.i = emptyCell[0];
+        shape.j = emptyCell[1];
+        pacman_remain--;
+    
     while (food_remain > 0) {
         var emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 1;
@@ -79,6 +87,10 @@ function Start() {
         keysDown[e.code] = false;
     }, false);
     interval = setInterval(UpdatePosition, 250);
+
+    //initialize reward position
+    board[reward.x][reward.y]=5;
+    rewardInterval = setInterval(updateRewardPosition,500);
 }
 
 
@@ -168,7 +180,6 @@ function Draw(direction) {
                 context.fill();
             } else if (board[i][j] === 5) {
                 drawReward();
-                updateRewardPosition();
             }
         }
     }
@@ -263,6 +274,8 @@ function hideAllWindows(){
     $("#settings").hide();
     $("#about").hide();
     $("#game").hide();
+    window.clearInterval(interval);
+    window.clearInterval(rewardInterval);
 }
 
 function loginValidation(){
@@ -351,17 +364,71 @@ function setRightKey(event){
 }
 
 function drawReward () {
-    context.beginPath();
-    context.rect(reward.x, reward.y, 60, 60);
-    context.fillStyle = "pink"; //color
-    context.fill();
+    var rewardImg=new Image();
+    rewardImg.src='images/lollipop.png';
+    context.drawImage(rewardImg, 37*reward.x, 37*reward.y,37, 37);
+    // context.beginPath();
+    // context.rect(reward.x, reward.y, 60, 60);
+    // context.fillStyle = "pink"; //color
+    // context.fill();
 }
 
 function updateRewardPosition() {
-    var emptyCell = findRandomEmptyCell(board);
-    reward.x = emptyCell[0];
-    reward.y = emptyCell[1];
-  //  board[reward.x][reward.y] = 5;
+    
+    var col = reward.x;
+    var row = reward.y;
+
+    // if((reward.x == -1 && reward.y == -1)) {
+    //     return;
+    // }
+
+    var randDirection = getRandDirection();
+
+    //move up
+    if(randDirection == 1){
+        if (isValidMove (col, row - 1)) {
+            reward.y = row - 1; //update reward position
+            board[reward.x][reward.y] = 5; 
+            board[col][row] = 0; //free cell
+        }
+    }
+    //move down
+    else if(randDirection == 2){
+        if (isValidMove (col, row + 1)) {
+            reward.y = row + 1; //update reward position
+            board[reward.x][reward.y] = 5; 
+            board[col][row] = 0; //free cell
+        }
+    }
+    //move right
+    else if(randDirection == 3){
+        if (isValidMove (col + 1, row)) {
+            reward.y = row + 1; //update reward position
+            board[reward.x][reward.y] = 5; 
+            board[col][row] = 0; //free cell
+        }
+    }
+    //move left
+    else if(randDirection == 4){
+        if (isValidMove (col - 1, row)) {
+            reward.y = row + 1; //update reward position
+            board[reward.x][reward.y] = 5; 
+            board[col][row] = 0; //free cell
+        }
+    }
+}
+
+function isValidMove(col,row) {
+    if (col > board.length || col < 0 || row > board.length || row < 0 ){
+        return false;
+    }
+    if(board[col][row] == 2 || board[col][row] == 3)
+        return false;
+    return true;
+}
+
+function getRandDirection(){
+    return Math.floor((Math.random() * 3) + 1);
 }
 
 function setGameSettings() {
