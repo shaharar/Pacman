@@ -213,7 +213,7 @@ div#wrap2 {
     margin-bottom: 10px;
     padding:15px;
 }
-h2.free_account {
+h2.new_account {
     color: #3399FF;
     display: block;
     margin-bottom: 25px;
@@ -232,13 +232,6 @@ form#register_form input[type='text'], input[type='password'], input[type='date'
 	border:1px solid #ccc;
 	margin:0;
 	padding:5px;
-}
-form#register_form select {
-    border: 1px solid #CCCCCC;
-    display: inline-block;
-    margin: 0;
-    padding: 5px 0;
-    width: 68px;
 }
 /* form#register_form input[name='submit'] { 
 	border:1px solid #3399FF;
