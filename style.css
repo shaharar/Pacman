@@ -1,5 +1,4 @@
 
-
 header{
   position: absolute;
 	color: black;
@@ -86,17 +85,17 @@ button#saveSettingsBtn{
 }
 
 /* Add padding to containers */
-.regContainer {
+/* .regContainer {
 	position: absolute;
 	top: 10%;
 	left: 35%;
 	width: 100%;
 	height: 100%;
 	background-color: white;
-  }
+  } */
   
   /* Full-width input fields */
-  input[type=text], input[type=password], input[type=date] {
+  /* input[type=text], input[type=password] {
 	width: 25%;
 	height: 4%;
 	display: block;
@@ -106,29 +105,14 @@ button#saveSettingsBtn{
 	box-sizing: border-box;
   }
   
-  input[type=text]:focus, input[type=password]:focus, input[type=date]:focus  {
+  input[type=text]:focus, input[type=password]:focus  {
 	background-color: #ddd;
 	outline: none;
   }
 
   h1{
 	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  }
-
-  
-  /* Set a style for the submit button */
-  .submitBtn {
-	background-color: rgb(127, 185, 129);
-	color: white;	
-	border: none;
-	cursor: pointer;
-	width: 10%;
-	left: 5%;
-  }
-  
-  .submitBtn:hover {
-	opacity: 1;
-  }
+  } */
     
   .logContainer {
 	position: absolute;
@@ -163,11 +147,6 @@ footer{
 	height: 5%;
 	background-color: blue;
 }
-
-
-
-
-
 
 
 
@@ -212,3 +191,94 @@ footer{
 .errorMsg{
 	color: red;
 }
+
+/* Registration */
+body { 
+	font-family: sans-serif;
+	font-size:13px;
+	background:#CCCCCC;
+	color:#444444;
+}
+p { 
+	padding:2px 
+}
+#wrap { 
+	width:820px; 
+	padding:20px; 
+	margin:20px auto;
+	background:#fff;
+}
+div#wrap2 {
+    border: 1px solid #CCCCCC;
+    margin-bottom: 10px;
+    padding:15px;
+}
+h2.free_account {
+    color: #3399FF;
+    display: block;
+    margin-bottom: 25px;
+}
+form#register_form label { 
+	display:inline-block; /* with block na */
+	width:125px;
+	font-weight:bold;
+}
+form#register_form label:after { 
+	content:":"
+}
+form#register_form input[type='text'], input[type='password'], input[type='date'] { 
+	display:inline-block; /* with block na */
+	width:200px;
+	border:1px solid #ccc;
+	margin:0;
+	padding:5px;
+}
+form#register_form select {
+    border: 1px solid #CCCCCC;
+    display: inline-block;
+    margin: 0;
+    padding: 5px 0;
+    width: 68px;
+}
+/* form#register_form input[name='submit'] { 
+	border:1px solid #3399FF;
+	background:#3399FF;
+	border-radius: 5px;
+	margin:10px;
+	color:#FFF;
+	padding:5px;
+	font-weight:bold
+} */
+
+/* form#register_form input[name='submit'] { 
+	cursor:pointer;
+} */
+
+/* Set a style for the submit button */
+.submitBtn {
+background-color: rgb(127, 185, 129);
+color: white;	
+border: none;
+cursor: pointer;
+width: 10%;
+left: 5%;
+}
+
+.submitBtn:hover {
+opacity: 1;
+}
+
+p.validate_msg {
+    border: 1px solid #FF0000;
+    font-weight: bold;
+    padding: 10px;
+	display:none;
+	margin-bottom:25px
+}
+span.validate  {
+	color:#F00;
+	padding-left:8px;
+	font-style:italic;
+}
+
+/* End Registration */
