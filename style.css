@@ -208,3 +208,7 @@ footer{
   text-decoration: none;
   cursor: pointer;
 }
+
+.errorMsg{
+	color: red;
+}

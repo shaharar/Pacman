@@ -78,47 +78,62 @@
 
                 <p>choose keyboard keys to control pacman's movement:</p>
                     <label for="upKey"><b>UP key</b></label>
-                    <input type="text" id="upKey" placeholder="Press any key" name="upKey" onkeyup="setUpKey(event)"> 
+                    <input type="text" id="upKey" placeholder="Press any key" name="upKey" onkeyup="setUpKey(event)">
+                    <p id="errorMsgUpKey" class="errorMsg"></p>
 
                     <label for="downKey"><b>DOWN key</b></label>
-                    <input type="text" id="downKey" placeholder="Press any key" name="downKey" onkeyup="setDownKey(event)"> 
+                    <input type="text" id="downKey" placeholder="Press any key" name="downKey" onkeyup="setDownKey(event)">
+                    <p id="errorMsgDownKey" class="errorMsg"></p>
 
                     <label for="leftKey"><b>LEFT key</b></label>
-                    <input type="text" id="leftKey" placeholder="Press any key" name="leftKey" onkeyup="setLeftKey(event)"> 
+                    <input type="text" id="leftKey" placeholder="Press any key" name="leftKey" onkeyup="setLeftKey(event)">
+                    <p id="errorMsgLeftKey" class="errorMsg"></p> 
 
                     <label for="rightKey"><b>Right key</b></label>
-                    <input type="text" id="rightKey" placeholder="Press any key" name="rightKey" onkeyup="setRightKey(event)"> 
+                    <input type="text" id="rightKey" placeholder="Press any key" name="rightKey" onkeyup="setRightKey(event)">
+                    <p id="errorMsgRightKey" class="errorMsg"></p> 
 
                     <p>set required number of balls (please choose a number between 50 to 90):</p>
                     <label for="numOfBalls"><b>Number Of Balls</b></label>
-                    <input type="text" placeholder="Enter number of balls:" name="numOfBalls">
+                    <input type="text" id="numOfBalls" placeholder="Enter number of balls" name="numOfBalls">
+                    <p id="errorMsgNumOfBalls" class="errorMsg"></p>
 
-                    <p>select requested ball colors:</p>
+                    <p>select requested ball colors (please choose a different color for each kind of form):</p>
                     <label for="color5P"><b>color of 5 points balls:</b></label>
-                    <input type="color" name="color5P">
+                    <input type="color" id="color5P" name="color5P">
                     <br>
                     <br>
 
                     <label for="color15P"><b>color of 15 points balls:</b></label>
-                    <input type="color" name="color15P">
+                    <input type="color" id="color15P" name="color15P">
                     <br>
                     <br>
 
                     <label for="color25P"><b>color of 25 points balls:</b></label>
-                    <input type="color" name="color25P">
+                    <input type="color" id="color25P" name="color25P">
+                    <p id="errorMsgColors" class="errorMsg"></p>
 
                     <p>select requested game duration (minimum 60 sec):</p>
                     <label for="gameDuration"><b>GAME duration</b></label>
-                    <input type="text" placeholder="Enter game duration" name="gameDuration">
+                    <input type="text" id="gameDuration" placeholder="Enter game duration" name="gameDuration">
+                    <p id="errorMsgGameDuration" class="errorMsg"></p>
 
                     <p>select requested number of monsters (please choose a number between 1 to 3):</p>
                     <label for="numOfMonsters"><b>Number Of Monsters</b></label>
-                    <input type="text" placeholder="Enter number of monsters" name="numOfMonsters">
+                    <input type="text" id="numOfMonsters" placeholder="Enter number of monsters" name="numOfMonsters">
+                    <p id="errorMsgNumOfMonsters" class="errorMsg"></p>
 
                     <button type="button" id="saveSettingsBtn" onclick="setGameSettings()">Save Settings</button>
                     <br>
                     <br>
                     <button type="button" id="playBtn" onclick="showWindow('game')">Play</button>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <button type="button" id="randomBtn" onclick="setRandomGameSettings()">Random</button>
 
                 
             </div>
@@ -155,6 +170,7 @@
             footer
         </footer>
 <script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="randomColor.js"></script>
 </body>
 
 </html>

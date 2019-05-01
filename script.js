@@ -10,8 +10,21 @@ var interval;
 var usersMap = new Map();
 usersMap.set('a',"a");
 var lastDirection;
-var gameTime;
 var reward = {x:0, y:0};
+
+
+//SETTINGS
+var keyUp = 'ArrowUp';
+var keyDown = 'ArrowDown';
+var keyLeft = 'ArrowLeft';
+var keyRight = 'ArrowRight';
+var numOfBalls;
+var color5P;
+var color15p;
+var color25P;
+var gameTime;
+var numOfMonsters;
+
 
 Start();
 
@@ -82,16 +95,16 @@ function findRandomEmptyCell(board) {
  * @return {number}
  */
 function GetKeyPressed() {
-    if (keysDown['ArrowUp']) {
+    if (keysDown[keyUp.code]) {
         return 1;
     }
-    if (keysDown['ArrowDown']) {
+    if (keysDown[keyDown.code]) {
         return 2;
     }
-    if (keysDown['ArrowLeft']) {
+    if (keysDown[keyLeft.code]) {
         return 3;
     }
-    if (keysDown['ArrowRight']) {
+    if (keysDown[keyRight.code]) {
         return 4;
     }
 }
@@ -313,23 +326,27 @@ $(document).keydown(function(event) {
 }
 
 function setUpKey(event){
-    var inputVal = event.key;
-    document.getElementById('upKey').value=inputVal;
+    var inputVal = event;
+    keyUp = event;
+    document.getElementById('upKey').value=inputVal.key;
 }
 
 function setDownKey(event){
-    var inputVal = event.key;
-    document.getElementById('downKey').value=inputVal;
+    var inputVal = event;
+    keyDown = event;
+    document.getElementById('downKey').value=inputVal.key;
 }
 
 function setLeftKey(event){
-    var inputVal = event.key;
-    document.getElementById('leftKey').value=inputVal;
+    var inputVal = event;
+    keyLeft = event;
+    document.getElementById('leftKey').value=inputVal.key;
 }
 
 function setRightKey(event){
-    var inputVal = event.key;
-    document.getElementById('rightKey').value=inputVal;
+    var inputVal = event;
+    keyRight = event;
+    document.getElementById('rightKey').value=inputVal.key;
 }
 
 function drawReward () {
@@ -346,15 +363,174 @@ function updateRewardPosition() {
   //  board[reward.x][reward.y] = 5;
 }
 
-function setGameSettings () {
-    //set the total time for the game
-   // gameTime = document.getElementById('gameDuration').value;
-   gameTime = 30;
+function setGameSettings() {
+    var isValid = settingsValidation();
+    if (isValid){
+        //set keys
+        // keyUp = document.getElementById('upKey').value;
+        // keyDown = document.getElementById('downKey').value;
+        // keyLeft = document.getElementById('leftKey').value;
+        // keyRight = document.getElementById('rightKey').value;
 
-    //set colors of food balls
+        //set number of balls
+        numOfBalls = document.getElementById('numOfBalls').value;
 
+        //set balls colors
+        color5P = document.getElementById('color5P').value;
+        color15P = document.getElementById('color15P').value;
+        color25P = document.getElementById('color25P').value;
 
-    //set keys
+        //set game duration
+        gameTime = document.getElementById('gameDuration').value;
 
-    window.alert("Your settings were saved");
+        //set number of monsters
+        numOfMonsters = document.getElementById('numOfMonsters').value;
+
+        window.alert("Your settings were saved.Press PLAY to start game");
+    }
+    else{
+        window.alert("Could not save settings.Press OK to see errors.")
+    }
+}
+
+function setRandomGameSettings(){
+      //set keys
+      keyUp = 'ArrowUp';
+      keyDown = 'ArrowDown';
+      keyLeft = 'ArrowLeft';
+      keyRight = 'ArrowRight';
+
+      //set number of balls
+      numOfBalls = Math.floor(Math.random() * 40) + 50;
+
+      //set balls colors
+      color5P = randomColor();
+      color15P = randomColor();
+      color25P = randomColor();
+
+      //set game duration
+      gameTime = Math.floor(Math.random() * 840) + 60;
+
+      //set number of monsters
+      numOfMonsters = Math.floor(Math.random() * 2) + 1;
+
+      showRandomGameSettings();
+}
+
+function showRandomGameSettings(){
+    //show keys
+    document.getElementById('upKey').value = keyUp;
+    document.getElementById('downKey').value = keyDown;
+    document.getElementById('leftKey').value = keyLeft;
+    document.getElementById('rightKey').value = keyRight;
+
+    //show number of balls
+    document.getElementById('numOfBalls').value = numOfBalls;
+    
+    
+    //show balls colors
+    document.getElementById('color5P').value = color5P;
+    document.getElementById('color15P').value = color15P;
+    document.getElementById('color25P').value = color25P;
+
+    //show game duration
+    document.getElementById('gameDuration').value = gameTime;
+
+    //show number of monsters
+    document.getElementById('numOfMonsters').value = numOfMonsters;
+
+}
+
+function settingsValidation(){
+    var valid = true;
+    //validate keys
+    if (!document.getElementById('upKey').value){
+        document.getElementById("errorMsgUpKey").innerHTML = "please press a requested key";
+        valid = false;
+    }
+    else{
+        document.getElementById("errorMsgUpKey").innerHTML = "";
+    }
+    if (!document.getElementById('downKey').value){
+        document.getElementById("errorMsgDownKey").innerHTML = "please press a requested key";
+        valid = false;
+    }
+    else{
+        document.getElementById("errorMsgDownKey").innerHTML = "";
+    }
+    if (!document.getElementById('leftKey').value){
+        document.getElementById("errorMsgLeftKey").innerHTML = "please press a requested key";
+        valid = false;
+    }
+    else{
+        document.getElementById("errorMsgLeftKey").innerHTML = "";
+    }
+    if (!document.getElementById('rightKey').value){
+        document.getElementById("errorMsgRightKey").innerHTML = "please press a requested key";
+        valid = false;
+    }
+    else{
+        document.getElementById("errorMsgRightKey").innerHTML = "";
+    }
+
+    //validate number of balls
+    if (!document.getElementById('numOfBalls').value){
+        document.getElementById("errorMsgNumOfBalls").innerHTML = "please choose a value (a number between 50 to 90)"
+        valid = false;
+    }
+    else if(document.getElementById('numOfBalls').value < 50 || document.getElementById('numOfBalls').value > 90){
+        document.getElementById("errorMsgNumOfBalls").innerHTML = "value should be a number between 50 to 90";
+        valid = false;
+    }
+    else{
+        document.getElementById("errorMsgNumOfBalls").innerHTML = "";
+    }
+
+    //validate balls colors
+    if (document.getElementById('color5P').value === document.getElementById('color15P').value || 
+    document.getElementById('color5P').value === document.getElementById('color25P').value || 
+    document.getElementById('color15P').value === document.getElementById('color25P').value){
+    document.getElementById("errorMsgColors").innerHTML = "please choose a different color for each kind of ball";
+    valid = false;
+    }
+    else{
+        document.getElementById("errorMsgColors").innerHTML = "";
+    }
+
+    //validate game duration
+    if (!document.getElementById('gameDuration').value){
+        document.getElementById("errorMsgGameDuration").innerHTML = "please choose a value (minimum 60 sec)"
+        valid = false;
+    }
+    else if (document.getElementById('gameDuration').value < 60){
+        document.getElementById("errorMsgGameDuration").innerHTML = "value should be a number greater or equal to 60 sec"
+        valid = false;
+    }
+    else{
+        document.getElementById("errorMsgGameDuration").innerHTML = "";
+    }
+
+    //validate number of monsters
+    if(!document.getElementById('numOfMonsters').value){
+        document.getElementById("errorMsgNumOfMonsters").innerHTML = "please choose a value (a number between 1 to 3)"
+        valid = false;
+    }
+    else if(document.getElementById('numOfMonsters').value < 1 || document.getElementById('numOfMonsters').value > 3){
+        document.getElementById("errorMsgNumOfMonsters").innerHTML = "value should be a number between 1 to 3"
+        valid = false;
+    }
+    else{
+        document.getElementById("errorMsgNumOfMonsters").innerHTML = "";
+    }
+
+    return valid;
+}
+
+function getRandomColor(){
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }
