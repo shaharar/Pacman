@@ -534,3 +534,117 @@ function getRandomColor(){
     }
     return color;
 }
+
+jQuery(function($) {	
+	$("form#register_form input[name='submit']").click(function() {
+	
+	var errorFound = false;
+	
+		var username 		= $("form#register_form input[name='username']").val();
+		var fname 			= $("form#register_form input[name='fname']").val();
+		var lname 			= $("form#register_form input[name='lname']").val();
+		var name_regex 		= /^[a-zA-Z]+$/;
+		var email 			= $("form#register_form input[name='email']").val();
+		var email_regex 	= /^[\w%_\-.\d]+@[\w.\-]+.[A-Za-z]{2,6}$/;
+		var password 		= $("form#register_form input[name='password']").val();
+		var pass_regex 		= /^[a-zA-Z0-9]+$/;
+		var repassword 		= $("form#register_form input[name='repassword']").val();
+		var birthdate 		= $("form#register_form input[name='birthDate']").val();
+
+		
+		/* check username */	
+		if(username == "") {
+			$("span.val_username").html("This field is required.").addClass('validate');
+			errorFound = true;
+		}
+		else {
+			$("span.val_username").html("");
+		}
+		// } else {
+		// 	if(usersMap.has(username)){
+		// 		$("span.val_email").html("This username already exists").addClass('validate');
+		// 		errorFound = true;
+		// 	} else {
+		// 	$("span.val_username").html("");
+		// 	}
+		// }
+
+		/* check password */
+		if(password == "") {
+			$("span.val_pass").html("This field is required.").addClass('validate');
+			errorFound = true;
+		} else {
+			if (password.length < 8) {
+				$("span.val_pass").html("Password must be at least 8 characters.").addClass('validate');
+				errorFound = true;
+			} else if(!pass_regex.test(password)){
+				$("span.val_pass").html("Password should contain only letters and digits.").addClass('validate');
+				errorFound = true;
+			} else {
+					$("span.val_pass").html("");
+			}
+		} 
+		/* check repeat password */
+		if(repassword == "") {
+			$("span.val_repass").html("This field is required.").addClass('validate');
+			errorFound = true;
+		} else {
+			if(password != repassword) {
+				$("span.val_repass").html("Password does not match!").addClass('validate');
+				errorFound = true;
+			} else {
+				$("span.val_repass").html("");
+			}
+		}
+		/* check first name */
+		if(fname == "") {
+			$("span.val_fname").html("This field is required.").addClass('validate');
+			errorFound = true;
+		} else if(!name_regex.test(fname)){
+			$("span.val_fname").html("First Name must contain only letters.").addClass('validate');
+			errorFound = true;
+		} else {
+			$("span.val_fname").html("");
+		}
+		/* check last name */
+		if(lname == "") {
+			$("span.val_lname").html("This field is required.").addClass('validate');
+			errorFound = true;
+		} else if(!name_regex.test(lname)){
+			$("span.val_lname").html("Last Name must contain only letters.").addClass('validate');
+			errorFound = true;
+		} else {
+			$("span.val_lname").html("");
+			}
+		/* check email */
+		if(email == "") {
+			$("span.val_email").html("This field is required.").addClass('validate');
+			errorFound = true;
+		} else {
+			if(!email_regex.test(email)){
+				$("span.val_email").html("Invalid Email!").addClass('validate');
+				errorFound = true;
+			} else {
+				$("span.val_email").html("");
+			}
+		}
+		/* check birthdate */
+		if(birthdate == "") {
+			$("span.val_birthdate").html("This field is required.").addClass('validate');
+			errorFound = true;
+		} else {
+			$("span.val_birthdate").html("");
+		}
+
+		//if errors were found
+		if(errorFound) {
+			$("p.validate_msg").slideDown("fast");
+			return false;
+		}
+		// registration is valid - go to Login window
+		else{
+			errorFound = false;
+			showWindow('login');
+		}
+	});
+});
