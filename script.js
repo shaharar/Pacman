@@ -65,7 +65,7 @@ function Start() {
             }
         }
     }
-    board[0][0] = 5; //start position of reward
+    // board[0][0] = 5; //start position of reward
     while (food_remain > 0) {
         var emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 1;
@@ -96,16 +96,16 @@ function findRandomEmptyCell(board) {
  * @return {number}
  */
 function GetKeyPressed() {
-    if (keysDown[keyUp.code]) {
+    if (keysDown[keyUp]) {
         return 1;
     }
-    if (keysDown[keyDown.code]) {
+    if (keysDown[keyDown]) {
         return 2;
     }
-    if (keysDown[keyLeft.code]) {
+    if (keysDown[keyLeft]) {
         return 3;
     }
-    if (keysDown[keyRight.code]) {
+    if (keysDown[keyRight]) {
         return 4;
     }
 }
@@ -166,10 +166,11 @@ function Draw(direction) {
                 context.rect(center.x - 30, center.y - 30, 60, 60);
                 context.fillStyle = "grey"; //color
                 context.fill();
-            } else if (board[i][j] === 5) {
-                drawReward();
-                updateRewardPosition();
             }
+            //  else if (board[i][j] === 5) {
+            //     drawReward();
+            //     updateRewardPosition();
+            // }
         }
     }
 }
@@ -287,6 +288,8 @@ function loginValidation(){
             }
             else{
                 lblUsername.value = username;
+                clearSettings();
+                clearSettingsErrors();
                 showWindow('settings');
             }
         }
@@ -328,25 +331,25 @@ $(document).keydown(function(event) {
 
 function setUpKey(event){
     var inputVal = event;
-    keyUp = event;
+    keyUp = event.code;
     document.getElementById('upKey').value=inputVal.key;
 }
 
 function setDownKey(event){
     var inputVal = event;
-    keyDown = event;
+    keyDown = event.code;
     document.getElementById('downKey').value=inputVal.key;
 }
 
 function setLeftKey(event){
     var inputVal = event;
-    keyLeft = event;
+    keyLeft = event.code;
     document.getElementById('leftKey').value=inputVal.key;
 }
 
 function setRightKey(event){
     var inputVal = event;
-    keyRight = event;
+    keyRight = event.code;
     document.getElementById('rightKey').value=inputVal.key;
 }
 
@@ -364,34 +367,75 @@ function updateRewardPosition() {
   //  board[reward.x][reward.y] = 5;
 }
 
+function clearSettings(){
+    document.getElementById('upKey').value = "";
+    document.getElementById('downKey').value = "";
+    document.getElementById('leftKey').value = "";
+    document.getElementById('rightKey').value = "";
+    document.getElementById('numOfBalls').value = "";
+    document.getElementById('color5P').value = "";
+    document.getElementById('color15P').value = "";
+    document.getElementById('color25P').value = "";
+    document.getElementById('gameDuration').value = "";
+    document.getElementById('numOfMonsters').value = "";
+
+    keyUp = "";
+    keyDown = "";
+    keyLeft = "";
+    keyRight = "";
+    numOfBalls = "";
+    color5P = "";
+    color15p = "";
+    color25P = "";
+    gameTime = "";
+    numOfMonsters = "";
+}
+
+function clearSettingsErrors(){
+    document.getElementById("errorMsgUpKey").innerHTML = "";
+    document.getElementById("errorMsgDownKey").innerHTML = "";
+    document.getElementById("errorMsgLeftKey").innerHTML = "";
+    document.getElementById("errorMsgRightKey").innerHTML = "";
+    document.getElementById("errorMsgNumOfBalls").innerHTML = "";
+    document.getElementById("errorMsgColors").innerHTML = "";
+    document.getElementById("errorMsgGameDuration").innerHTML = "";
+    document.getElementById("errorMsgNumOfMonsters").innerHTML = "";
+}
+
 function setGameSettings() {
-    validSettings = settingsValidation();
-    if (validSettings){
-        //set keys
-        // keyUp = document.getElementById('upKey').value;
-        // keyDown = document.getElementById('downKey').value;
-        // keyLeft = document.getElementById('leftKey').value;
-        // keyRight = document.getElementById('rightKey').value;
-
-        //set number of balls
-        numOfBalls = document.getElementById('numOfBalls').value;
-
-        //set balls colors
-        color5P = document.getElementById('color5P').value;
-        color15P = document.getElementById('color15P').value;
-        color25P = document.getElementById('color25P').value;
-
-        //set game duration
-        gameTime = document.getElementById('gameDuration').value;
-
-        //set number of monsters
-        numOfMonsters = document.getElementById('numOfMonsters').value;
-
-        window.alert("Your settings were saved.Press PLAY to start game");
+    if (!lblUsername.value){
+        window.alert("You should login in order to define game settings.If you dont have an account sign up via register")
     }
     else{
-        window.alert("Could not save settings.Press OK to see errors.")
+        validSettings = settingsValidation();
+        if (validSettings){
+            //set keys
+            // keyUp = document.getElementById('upKey').value;
+            // keyDown = document.getElementById('downKey').value;
+            // keyLeft = document.getElementById('leftKey').value;
+            // keyRight = document.getElementById('rightKey').value;
+    
+            //set number of balls
+            numOfBalls = document.getElementById('numOfBalls').value;
+    
+            //set balls colors
+            color5P = document.getElementById('color5P').value;
+            color15P = document.getElementById('color15P').value;
+            color25P = document.getElementById('color25P').value;
+    
+            //set game duration
+            gameTime = document.getElementById('gameDuration').value;
+    
+            //set number of monsters
+            numOfMonsters = document.getElementById('numOfMonsters').value;
+    
+            window.alert("Your settings were saved.Press PLAY to start game");
+        }
+        else{
+            window.alert("Could not save settings.Press OK to see errors.")
+        }
     }
+
 }
 
 function setRandomGameSettings(){
@@ -439,7 +483,7 @@ function showRandomGameSettings(){
 
     //show number of monsters
     document.getElementById('numOfMonsters').value = numOfMonsters;
-    settingsValidation();
+    clearSettingsErrors();
 }
 
 function settingsValidation(){
@@ -537,11 +581,14 @@ function getRandomColor(){
 }
 
 function playGame(){
-    if (validSettings){
+    if (!lblUsername.value){
+        window.alert("You should login in order to play.If you dont have an account sign up via register")
+    }
+    else if (validSettings){
         showWindow('game');
     }
     else{
-        window.alert("You should either set game settings or fix errors above in order to be able to play")
+        window.alert("You should either press save settings, set game settings or fix errors above in order to be able to play")
     }
 }
 jQuery(function($) {	
