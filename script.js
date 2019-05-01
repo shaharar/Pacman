@@ -536,7 +536,6 @@ function getRandomColor(){
     return color;
 }
 
-<<<<<<< HEAD
 function playGame(){
     if (validSettings){
         showWindow('game');
@@ -545,7 +544,6 @@ function playGame(){
         window.alert("You should either set game settings or fix errors above in order to be able to play")
     }
 }
-=======
 jQuery(function($) {	
 	$("form#register_form input[name='submit']").click(function() {
 	
@@ -659,4 +657,3 @@ jQuery(function($) {
 		}
 	});
 });
->>>>>>> 9dfcba93e07f5519446e081c64906710b9bf3354
