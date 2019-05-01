@@ -24,6 +24,7 @@ var color15p;
 var color25P;
 var gameTime;
 var numOfMonsters;
+var validSettings;
 
 
 Start();
@@ -364,8 +365,8 @@ function updateRewardPosition() {
 }
 
 function setGameSettings() {
-    var isValid = settingsValidation();
-    if (isValid){
+    validSettings = settingsValidation();
+    if (validSettings){
         //set keys
         // keyUp = document.getElementById('upKey').value;
         // keyDown = document.getElementById('downKey').value;
@@ -438,7 +439,7 @@ function showRandomGameSettings(){
 
     //show number of monsters
     document.getElementById('numOfMonsters').value = numOfMonsters;
-
+    settingsValidation();
 }
 
 function settingsValidation(){
@@ -535,6 +536,14 @@ function getRandomColor(){
     return color;
 }
 
+function playGame(){
+    if (validSettings){
+        showWindow('game');
+    }
+    else{
+        window.alert("You should either set game settings or fix errors above in order to be able to play")
+    }
+}
 jQuery(function($) {	
 	$("form#register_form input[name='submit']").click(function() {
 	
