@@ -86,7 +86,7 @@ function Start() {
     addEventListener("keyup", function (e) {
         keysDown[e.code] = false;
     }, false);
-    interval = setInterval(UpdatePosition, 80);
+    interval = setInterval(UpdatePosition, 250);
 
     //initialize reward position
     board[reward.x][reward.y]=5;
@@ -282,8 +282,8 @@ function hideAllWindows(){
     $("#settings").hide();
     $("#about").hide();
     $("#game").hide();
-    window.clearInterval(interval);
-    window.clearInterval(rewardInterval);
+    // window.clearInterval(interval);
+    // window.clearInterval(rewardInterval);
 }
 
 function loginValidation(){
