@@ -86,7 +86,7 @@ function Start() {
     addEventListener("keyup", function (e) {
         keysDown[e.code] = false;
     }, false);
-    interval = setInterval(UpdatePosition, 250);
+    interval = setInterval(UpdatePosition, 80);
 
     //initialize reward position
     board[reward.x][reward.y]=5;
@@ -229,8 +229,16 @@ function UpdatePosition() {
         // }
         score++;
     }
+
+    // pacman ate reward - gets bonus
+    if (shape.i == reward.x && shape.j == reward.y) {
+        score += 50;
+        reward = -1;
+        reward = -1;
+        board[shape.i][shape.j] = 2;
+    }
+
     board[shape.i][shape.j] = 2;
-    //board[reward.x][reward.y] = 5;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
     if (score >= 20 && time_elapsed <= 10) {
@@ -377,12 +385,12 @@ function drawReward () {
 
 function updateRewardPosition() {
     
+    if((reward.x == -1 && reward.y == -1)) { // pacman already ate the reward
+        return;
+    }
+
     var col = reward.x;
     var row = reward.y;
-
-    // if((reward.x == -1 && reward.y == -1)) {
-    //     return;
-    // }
 
     var randDirection = getRandDirection();
 
@@ -421,7 +429,7 @@ function updateRewardPosition() {
 }
 
 function isValidMove(col,row) {
-    if (col > board.length || col < 0 || row > board.length || row < 0 ){
+    if (col > board.length || col <= 0 || row > board.length || row <= 0 ){
         return false;
     }
     if(board[col][row] == 2 || board[col][row] == 3)
