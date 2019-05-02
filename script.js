@@ -135,7 +135,7 @@ function Start() {
 function classifyBallsByColors (){
     var randBallType;
     var ballsAmount;
-    var ballColor;
+    var ballColor;    
 
     colorsBoard = new Array();
     for (i = 0; i < numOfColums; i++){
@@ -143,15 +143,15 @@ function classifyBallsByColors (){
         for (j = 0; j < numOfRows; j++){
             if (board[i][j] == 1) { //is a food cell
                 randBallType = getRandomBallType();
-                if (randBallType == 'ball_5'){
+                if (randBallType == 0){
                     ballsAmount = numOfBall_5;
                     ballColor = color5P;
                 }
-                else if (randBallType == 'ball_15'){
+                else if (randBallType == 1){
                     ballsAmount = numOfBall_15;
                     ballColor = color15P;
                 }
-                else if (randBallType == 'ball_25'){
+                else if (randBallType == 2){
                     ballsAmount = numOfBall_25;
                     ballColor = color25P;
                 }
@@ -159,21 +159,22 @@ function classifyBallsByColors (){
               //  console.log(ballsAmount);
 
                 //check if there were remained balls of that type
-                // while(ballsAmount <= 0){
-                //     randBallType = getRandomBallType();
-                //     if (randBallType == 'ball_5'){
-                //         ballsAmount = numOfBall_5;
-                //         ballColor = color5P;
-                //     }
-                //     else if (randBallType == 'ball_15'){
-                //         ballsAmount = numOfBall_15;
-                //         ballColor = color15P;
-                //     }
-                //     else if (randBallType == 'ball_25'){
-                //         ballsAmount = numOfBall_25;
-                //         ballColor = color25P;
-                //     }
-                // }
+                while(ballsAmount == 0 && (numOfBall_5 + numOfBall_15 + numOfBall_25 > 0)){
+                    randBallType = getRandomBallType();
+                    if (randBallType == 0){
+                        ballsAmount = numOfBall_5;
+                        ballColor = color5P;
+                    }
+                    else if (randBallType == 1){
+                        ballsAmount = numOfBall_15;
+                        ballColor = color15P;
+                    }
+                    else if (randBallType == 2){
+                        ballsAmount = numOfBall_25;
+                        ballColor = color25P;
+                    }
+                }
+            //    if(ballsAmount > 0){
                 colorsBoard[i][j] = ballColor;
                 if(ballsAmount == numOfBall_5){
                     numOfBall_5--;                        
@@ -183,22 +184,15 @@ function classifyBallsByColors (){
                 }
                 else if(ballsAmount == numOfBall_25){
                     numOfBall_25--;                        
-                }                
-            }
+                }  
+            }              
+        //    }
         }
     }
 }
 
 function getRandomBallType() {
-    var rand = Math.floor((Math.random() * 2) + 1);
-    switch (rand) {
-        case 0:
-            return 'ball_5';
-        case 1:
-            return 'ball_15';
-        case 2:
-            return 'ball_25';   
-    }
+    return Math.floor((Math.random() * 3));
 }
 
 function findRandomEmptyCell(board) {
@@ -273,14 +267,22 @@ function Draw(direction) {
                 else { //left or right
                     context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
                 }
-                context.fillStyle = "black"; //color
+                context.fillStyle = "black"; //pacman's eye color
                 context.fill();
-            } else if (board[i][j] === 1) {
+            } else if (board[i][j] === 1) { //food ball
                 context.beginPath();
-                context.arc(center.x, center.y, 10, 0, 2 * Math.PI); // circle
+                if (colorsBoard[i][j] == color5P){
+                    context.arc(center.x, center.y, 10, 0, 2 * Math.PI); // circle
+                }
+                else if (colorsBoard[i][j] == color15P){
+                    context.arc(center.x, center.y, 13, 0, 2 * Math.PI); // circle
+                }
+                else if (colorsBoard[i][j] == color25P){
+                    context.arc(center.x, center.y, 16, 0, 2 * Math.PI); // circle
+                }
                 context.fillStyle = colorsBoard[i][j]; //color
                 context.fill();
-            } else if (board[i][j] === 4) {
+            } else if (board[i][j] === 4) { //wall
                 context.beginPath();
                 context.rect(center.x - 30, center.y - 30, 60, 60);
                 context.fillStyle = "grey"; //color
@@ -347,7 +349,6 @@ function UpdatePosition() {
         else if (color == color25P){
             score += 25;
         }
-        score++;
     }
 
     /* pacman ate reward - gets bonus */
@@ -366,7 +367,7 @@ function UpdatePosition() {
     }
 
     /* ---End Of The Game--- */
-    // if (numOfBalls === 0) {
+    // if ((numOfBall_5 + numOfBall_15 + numOfBall_25) === 0) {
     //     clearAllIntervals();
     //     window.alert("Game completed");
     // }
@@ -517,29 +518,38 @@ function updateRewardPosition() {
 
     var col = reward.x;
     var row = reward.y;
-    var randDirection = getRandDirection();
-    //move up
-    if(randDirection == 1){
-        if (isValidMove (col, row - 1)) {
-            reward.y = row - 1; //update reward position
+    var updated = false;
+
+    while (!updated){
+        var randDirection = getRandDirection();
+        //move up
+        if(randDirection == 1){
+            if (isValidMove (col, row - 1)) {
+                reward.y = row - 1; //update reward position
+                updated = true;
+            }
+            
         }
-    }
-    //move down
-    else if(randDirection == 2){
-        if (isValidMove (col, row + 1)) {
-            reward.y = row + 1; //update reward position
+        //move down
+        else if(randDirection == 2){
+            if (isValidMove (col, row + 1)) {
+                reward.y = row + 1; //update reward position
+                updated = true;
+            }
         }
-    }
-    //move right
-    else if(randDirection == 3){
-        if (isValidMove (col + 1, row)) {
-            reward.x = col + 1; //update reward position
+        //move right
+        else if(randDirection == 3){
+            if (isValidMove (col + 1, row)) {
+                reward.x = col + 1; //update reward position
+                updated = true;
+            }
         }
-    }
-    //move left
-    else if(randDirection == 4){
-        if (isValidMove (col - 1, row)) {
-            reward.x = col - 1; //update reward position
+        //move left
+        else if(randDirection == 4){
+            if (isValidMove (col - 1, row)) {
+                reward.x = col - 1; //update reward position
+                updated = true;
+            }
         }
     }
     board[reward.x][reward.y] = 5; 
@@ -550,8 +560,8 @@ function isValidMove(col,row) {
     if (col > numOfColums - 1 || col < 0 || row > numOfRows - 1 || row < 0 ){
         return false;
     }
-    // if(board[col][row] == 2 || board[col][row] == 3 || board[col][row] == 4)  // add ghosts
-    //     return false;
+    if(board[col][row] == 2 || board[col][row] == 4)  // add ghosts
+        return false;
     return true;
 }
 
@@ -614,6 +624,18 @@ function updateGhostPosition(ghost){
     }
     if (direction != -1){
         board[col][row] = 0; //free cell
+    }
+
+    if (ghost.x == shape.i && ghost.y == shape.j) {
+        score -= 10;
+        lives--;
+        
+        if (lives == 0){
+            //game overrrrrrrrrrrrrrrrrrrrr
+        }
+        else{
+        ////call function of update positions of pacman and ghosts
+        }
     }
 
 }
