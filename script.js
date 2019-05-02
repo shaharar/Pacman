@@ -59,7 +59,10 @@ function Start() {
     var cnt = numOfColums*numOfRows;
     var pacman_remain = 1;
     start_time = new Date();
-
+    setNumOfFoodBalls();
+    console.log(numOfBall_5);
+    console.log(numOfBall_15);
+    console.log(numOfBall_25);
 
     for (var i = 0; i < numOfColums; i++) {
         board[i] = new Array();
@@ -113,6 +116,7 @@ function Start() {
     }
 
     classifyBallsByColors();
+    
 
     keysDown = {};
     addEventListener("keydown", function (e) {
@@ -151,19 +155,35 @@ function classifyBallsByColors (){
                     ballsAmount = numOfBall_25;
                     ballColor = color25P;
                 }
-                //check if there were remain balls of that type
-                if (ballsAmount > 0) {
-                    colorsBoard[i][j] = ballColor;
-                    if(ballsAmount == numOfBall_5){
-                        numOfBall_5--;                        
-                    }
-                    else if(ballsAmount == numOfBall_15){
-                        numOfBall_15--;                        
-                    }
-                    else if(ballsAmount == numOfBall_25){
-                        numOfBall_25--;                        
-                    }
+              //  console.log(ballColor);
+              //  console.log(ballsAmount);
+
+                //check if there were remained balls of that type
+                // while(ballsAmount <= 0){
+                //     randBallType = getRandomBallType();
+                //     if (randBallType == 'ball_5'){
+                //         ballsAmount = numOfBall_5;
+                //         ballColor = color5P;
+                //     }
+                //     else if (randBallType == 'ball_15'){
+                //         ballsAmount = numOfBall_15;
+                //         ballColor = color15P;
+                //     }
+                //     else if (randBallType == 'ball_25'){
+                //         ballsAmount = numOfBall_25;
+                //         ballColor = color25P;
+                //     }
+                // }
+                colorsBoard[i][j] = ballColor;
+                if(ballsAmount == numOfBall_5){
+                    numOfBall_5--;                        
                 }
+                else if(ballsAmount == numOfBall_15){
+                    numOfBall_15--;                        
+                }
+                else if(ballsAmount == numOfBall_25){
+                    numOfBall_25--;                        
+                }                
             }
         }
     }
@@ -580,9 +600,6 @@ function updateGhostPosition(ghost){
             ghost.x = col - 1; //update ghost position
     }
     if (Object.is(ghost,ghost1)){
-        // console.log(ghost.x + "," + ghost.y);
-        // console.log(ghost1.x + "," + ghost1.y);
-        // console.log(col + "," + row);
         board[ghost.x][ghost.y] = 6;
         // context.drawImage(ghost1Img, 60 * ghost1.x, 60 * ghost1.y, 60, 60);
     }
@@ -607,7 +624,6 @@ function getGhostDirection(col, row){
     var isValidDown = isValidGhostMove(col,row + 1);
     var isValidLeft = isValidGhostMove(col - 1,row);
     var isValidRight = isValidGhostMove(col + 1,row);
-    // console.log(isValidUp + "," + isValidDown + "," + isValidLeft + "," + isValidRight)
     var minDistance;
     var minIndex;
     if (isValidUp){
@@ -632,8 +648,6 @@ function getGhostDirection(col, row){
         }
     }
 
-    // console.log(distances);
-    // console.log(minIndex);
 
     if (minDistance !== Infinity){
         return minIndex;
@@ -728,9 +742,9 @@ function setGameSettings() {
 }
 
 function setNumOfFoodBalls() {
-    numOfBall_5 = 0.6 * numOfBalls;
-    numOfBall_15 = 0.3 * numOfBalls;
-    numOfBall_25 = numOfBalls - numOfBall_15 - numOfBall_25; //the rest from the total num of balls (~10%)
+    numOfBall_5 = Math.floor(0.6 * numOfBalls);
+    numOfBall_15 = Math.floor(0.3 * numOfBalls);
+    numOfBall_25 = numOfBalls - numOfBall_15 - numOfBall_5; //the rest from the total num of balls (~10%)
 }
 
 function setRandomGameSettings(){
@@ -993,7 +1007,6 @@ jQuery(function($) {
 		else{
             errorFound = false;
             usersMap.set(username,password);
-            console.log(usersMap);
             clearInputs();
 			showWindow('login');
 		}
