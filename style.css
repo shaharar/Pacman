@@ -81,7 +81,7 @@ button#saveSettingsBtn{
 }
 
 canvas{
-	border: #3399FF solid;
+	border: black solid 15px;
 }
 /* #game{
 	visibility: hidden;
@@ -278,3 +278,8 @@ span.validate  {
 }
 
 /* End Registration */
+
+
+#newGameBtn {
+	left: 1%;
+}
