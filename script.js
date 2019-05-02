@@ -13,6 +13,7 @@ usersMap.set('a',"a");
 var lastDirection;
 var reward = {x:0, y:0};
 var numOfColums = 20;
+var numOfRows = 10;
 
 var numOfBall_5;
 var numOfBall_15;
@@ -32,38 +33,37 @@ var gameTime;
 var numOfMonsters;
 var validSettings;
 
-
+hideAllWindows();
+showWindow('welcome');
 Start();
 
 function Start() {
-    hideAllWindows();
-    showWindow('welcome');
     board = new Array();
     score = 0;
     lives = 3;
+    //time_elapsed = 0;
     pac_color = "yellow";
     lastDirection = 0;
     var cnt = numOfColums*numOfRows;
-    var food_remain = 50;
     var pacman_remain = 1;
     start_time = new Date();
     for (var i = 0; i < numOfColums; i++) {
         board[i] = new Array();
-        //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
         for (var j = 0; j < numOfRows; j++) {
-            if ((i === 0 && j === 2) || (i === 0 && j === 3) || (i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 19 && j === 7) ||
+            //initialize reward position
+            if (i == reward.x && j == reward.y){
+                board[i][j] = 5;
+            }
+            //initalize walls
+            else if ((i === 0 && j === 2) || (i === 0 && j === 3) || (i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 19 && j === 7) ||
              (i === 6 && j === 2) || (i === 4 && j === 8) || (i === 5 && j === 8) || (i === 6 && j === 8) || (i === 7 && j === 8) || (i === 8 && j === 5) || (i === 9 && j === 5)) {
                 board[i][j] = 4;
+            //initialize balls (without classification by colors)
             } else {
                 var randomNum = Math.random();
-                if (randomNum <= 1.0 * food_remain / cnt) {
-                    food_remain--;
+                if (randomNum <= 1.0 * numOfBalls / cnt) {
+                    numOfBalls--;
                     board[i][j] = 1;
-                // } else if (randomNum < 1.0 * (pacman_remain + food_remain) / cnt) {
-                //     shape.i = i;
-                //     shape.j = j;
-                //     pacman_remain--;
-                //     board[i][j] = 2;
                 } else {
                     board[i][j] = 0;
                 }
@@ -71,7 +71,6 @@ function Start() {
             }
         }
     }
-
     //initialize pacman position
     var emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 2;
@@ -79,11 +78,15 @@ function Start() {
         shape.j = emptyCell[1];
         pacman_remain--;
     
-    while (food_remain > 0) {
+    //initialize the rest of total balls (if remained)
+    while (numOfBalls > 0) {
         var emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 1;
-        food_remain--;
+        numOfBalls--;
     }
+
+    classifyBallsByColors();
+
     keysDown = {};
     addEventListener("keydown", function (e) {
         keysDown[e.code] = true;
@@ -93,11 +96,61 @@ function Start() {
     }, false);
     interval = setInterval(UpdatePosition, 120);
 
-    //initialize reward position
-    board[reward.x][reward.y] = 5;
-    rewardInterval = setInterval(updateRewardPosition, 700);
+    rewardInterval = setInterval(updateRewardPosition, 500);
 }
 
+function classifyBallsByColors (){
+    var randBallType;
+    var ballsAmount;
+    var ballColor;
+
+    colorsBoard = new Array();
+    for (i = 0; i < numOfColums; i++){
+        colorsBoard[i] = new Array();
+        for (j = 0; j < numOfRows; j++){
+            if (board[i][j] == 1) { //is a food cell
+                randBallType = getRandomBallType();
+                if (randBallType == 'ball_5'){
+                    ballsAmount = numOfBall_5;
+                    ballColor = color5P;
+                }
+                else if (randBallType == 'ball_15'){
+                    ballsAmount = numOfBall_15;
+                    ballColor = color15P;
+                }
+                else if (randBallType == 'ball_25'){
+                    ballsAmount = numOfBall_25;
+                    ballColor = color25P;
+                }
+                //check if there were remain balls of that type
+                if (ballsAmount > 0) {
+                    colorsBoard[i][j] = ballColor;
+                    if(ballsAmount == numOfBall_5){
+                        numOfBall_5--;                        
+                    }
+                    else if(ballsAmount == numOfBall_15){
+                        numOfBall_15--;                        
+                    }
+                    else if(ballsAmount == numOfBall_25){
+                        numOfBall_25--;                        
+                    }
+                }
+            }
+        }
+    }
+}
+
+function getRandomBallType() {
+    var rand = Math.floor((Math.random() * 2) + 1);
+    switch (rand) {
+        case 0:
+            return 'ball_5';
+        case 1:
+            return 'ball_15';
+        case 2:
+            return 'ball_25';   
+    }
+}
 
 function findRandomEmptyCell(board) {
     var i = Math.floor((Math.random() * numOfColums-1) + 1);
@@ -175,8 +228,8 @@ function Draw(direction) {
                 context.fill();
             } else if (board[i][j] === 1) {
                 context.beginPath();
-                context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-                context.fillStyle = "black"; //color
+                context.arc(center.x, center.y, 10, 0, 2 * Math.PI); // circle
+                context.fillStyle = colorsBoard[i][j]; //color
                 context.fill();
             } else if (board[i][j] === 4) {
                 context.beginPath();
@@ -221,25 +274,27 @@ function UpdatePosition() {
     else {
         x = 0;
     }
+    /* pacman ate food ball */
     if (board[shape.i][shape.j] === 1) {
         //check which kind of ball the pacman ate
-        // if (){
-        //     score += 5;
-        // }
-        // else if (){
-        //     score += 15;
-        // }
-        // else if (){
-        //     score += 25;
-        // }
+        var color = colorsBoard[i][j];   
+        if (color == color5P) {
+            score += 5;
+        }
+        else if (color == color15P){
+            score += 15;
+        }
+        else if (color == color25P){
+            score += 25;
+        }
         score++;
     }
 
-    // pacman ate reward - gets bonus
+    /* pacman ate reward - gets bonus */
     if (shape.i == reward.x && shape.j == reward.y) {
         score += 50;
-        reward = -1;
-        reward = -1;
+        reward.x = -1;
+        reward.y = -1;
         board[shape.i][shape.j] = 2;
     }
 
@@ -249,20 +304,24 @@ function UpdatePosition() {
     if (score >= 20 && time_elapsed <= 10) {
         pac_color = "green";
     }
-    if (score === 50) {
-        window.clearInterval(interval);
-        window.alert("Game completed");
-    }
-    // if (time_elapsed === gameTime){
+
+    /* ---End Of The Game--- */
+    // if (numOfBalls === 0) {
+    //     clearAllIntervals();
+    //     window.alert("Game completed");
+    // }
+
+    // if (time_elapsed >= gameTime){
     //     if (score < 150){
-    //         window.clearInterval(interval);
+    //         clearAllIntervals();
     //         window.alert("You can do better");
     //     }
     //     else{
-    //         window.clearInterval(interval);
+    //         clearAllIntervals();
     //         window.alert("We have a Winner!!!");
     //     }
     // }
+
     else {
         Draw(x);
     }
@@ -289,6 +348,12 @@ function hideAllWindows(){
     $("#game").hide();
     // window.clearInterval(interval);
     // window.clearInterval(rewardInterval);
+}
+
+function clearAllIntervals() {
+    window.clearInterval(interval);
+    window.clearInterval(rewardInterval);
+   // window.clearInterval(GhostInterval);
 }
 
 function loginValidation(){
@@ -425,8 +490,8 @@ function isValidMove(col,row) {
     if (col > numOfColums - 1 || col < 0 || row > numOfRows - 1 || row < 0 ){
         return false;
     }
-    if(board[col][row] == 2 || board[col][row] == 3 || board[col][row] == 4)
-        return false;
+    // if(board[col][row] == 2 || board[col][row] == 3 || board[col][row] == 4)  // add ghosts
+    //     return false;
     return true;
 }
 
@@ -506,7 +571,9 @@ function setGameSettings() {
 }
 
 function setNumOfFoodBalls() {
-    
+    numOfBall_5 = 0.6 * numOfBalls;
+    numOfBall_15 = 0.3 * numOfBalls;
+    numOfBall_25 = numOfBalls - numOfBall_15 - numOfBall_25; //the rest from the total num of balls (~10%)
 }
 
 function setRandomGameSettings(){
