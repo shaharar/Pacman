@@ -12,6 +12,11 @@ var usersMap = new Map();
 usersMap.set('a',"a");
 var lastDirection;
 var reward = {x:0, y:0};
+var numOfColums = 20;
+
+var numOfBall_5;
+var numOfBall_15;
+var numOfBall_25;
 
 
 //SETTINGS
@@ -38,15 +43,15 @@ function Start() {
     lives = 3;
     pac_color = "yellow";
     lastDirection = 0;
-    var cnt = 100;
+    var cnt = numOfColums*numOfRows;
     var food_remain = 50;
     var pacman_remain = 1;
     start_time = new Date();
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < numOfColums; i++) {
         board[i] = new Array();
         //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-        for (var j = 0; j < 10; j++) {
-            if ((i === 0 && j === 2) || (i === 0 && j === 3) || (i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) ||
+        for (var j = 0; j < numOfRows; j++) {
+            if ((i === 0 && j === 2) || (i === 0 && j === 3) || (i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 19 && j === 7) ||
              (i === 6 && j === 2) || (i === 4 && j === 8) || (i === 5 && j === 8) || (i === 6 && j === 8) || (i === 7 && j === 8) || (i === 8 && j === 5) || (i === 9 && j === 5)) {
                 board[i][j] = 4;
             } else {
@@ -95,11 +100,11 @@ function Start() {
 
 
 function findRandomEmptyCell(board) {
-    var i = Math.floor((Math.random() * 9) + 1);
-    var j = Math.floor((Math.random() * 9) + 1);
+    var i = Math.floor((Math.random() * numOfColums-1) + 1);
+    var j = Math.floor((Math.random() * numOfRows-1) + 1);
     while (board[i][j] !== 0) {
-        i = Math.floor((Math.random() * 9) + 1);
-        j = Math.floor((Math.random() * 9) + 1);
+        i = Math.floor((Math.random() * numOfColums-1) + 1);
+        j = Math.floor((Math.random() * numOfRows-1) + 1);
     }
     return [i, j];
 }
@@ -132,8 +137,8 @@ function Draw(direction) {
     lblScore.value = score;
     lblTime.value = time_elapsed;
     lblLife.value = lives;
-    for (var i = 0; i < 10; i++) {
-        for (var j = 0; j < 10; j++) {
+    for (var i = 0; i < numOfColums; i++) {
+        for (var j = 0; j < numOfRows; j++) {
             var center = new Object();
             center.x = i * 60 + 30;
             center.y = j * 60 + 30;
@@ -417,7 +422,7 @@ function updateRewardPosition() {
 }
 
 function isValidMove(col,row) {
-    if (col > board.length - 1 || col < 0 || row > board.length - 1 || row < 0 ){
+    if (col > numOfColums - 1 || col < 0 || row > numOfRows - 1 || row < 0 ){
         return false;
     }
     if(board[col][row] == 2 || board[col][row] == 3 || board[col][row] == 4)
@@ -498,6 +503,10 @@ function setGameSettings() {
         }
     }
 
+}
+
+function setNumOfFoodBalls() {
+    
 }
 
 function setRandomGameSettings(){
@@ -674,18 +683,14 @@ jQuery(function($) {
 		if(username == "") {
 			$("span.val_username").html("This field is required.").addClass('validate');
 			errorFound = true;
-		}
-		else {
+		} else {
+			if(usersMap.has(username)){
+				$("span.val_username").html("This username already exists").addClass('validate');
+				errorFound = true;
+			} else {
 			$("span.val_username").html("");
+			}
 		}
-		// } else {
-		// 	if(usersMap.has(username)){
-		// 		$("span.val_email").html("This username already exists").addClass('validate');
-		// 		errorFound = true;
-		// 	} else {
-		// 	$("span.val_username").html("");
-		// 	}
-		// }
 
 		/* check password */
 		if(password == "") {
@@ -699,7 +704,7 @@ jQuery(function($) {
 				$("span.val_pass").html("Password should contain only letters and digits.").addClass('validate');
 				errorFound = true;
 			} else {
-					$("span.val_pass").html("");
+                    $("span.val_pass").html("");
 			}
 		} 
 		/* check repeat password */
@@ -761,8 +766,19 @@ jQuery(function($) {
 		}
 		// registration is valid - go to Login window
 		else{
-			errorFound = false;
+            errorFound = false;
+            usersMap.set(username,password);
+            console.log(usersMap);
+            clearInputs();
 			showWindow('login');
 		}
 	});
 });
+
+function clearInputs() {
+    var divObjects = document.getElementById('register_form');
+    var inputs = divObjects.getElementsByTagName('input');
+    for (i = 0; i < inputs.length; i++) {
+        inputs[i].value = "";
+    }
+}

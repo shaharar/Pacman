@@ -80,6 +80,9 @@ button#saveSettingsBtn{
 	left: 5%;
 }
 
+canvas{
+	border: #3399FF solid;
+}
 /* #game{
 	visibility: hidden;
 } */
