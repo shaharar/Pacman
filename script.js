@@ -8,10 +8,14 @@ var start_time;
 var time_elapsed;
 var interval;
 var rewardInterval;
+var ghostsInterval;
 var usersMap = new Map();
 usersMap.set('a',"a");
 var lastDirection;
 var reward = {x:0, y:0};
+var ghost1 = {x:19, y:9};
+var ghost2 = {x:0, y:9};
+var ghost3 = {x:19, y:0};
 var numOfColums = 20;
 var numOfRows = 10;
 
@@ -19,6 +23,12 @@ var numOfBall_5;
 var numOfBall_15;
 var numOfBall_25;
 
+var ghost1Img = new Image();
+ghost1Img.src = 'images/blueGhost.png';
+var ghost2Img = new Image();
+ghost2Img.src = 'images/redGhost.png';
+var ghost3Img = new Image();
+ghost3Img.src = 'images/yellowGhost.png';
 
 //SETTINGS
 var keyUp = 'ArrowUp';
@@ -33,9 +43,11 @@ var gameTime;
 var numOfMonsters;
 var validSettings;
 
+
+// Start();
+
 hideAllWindows();
 showWindow('welcome');
-Start();
 
 function Start() {
     board = new Array();
@@ -47,6 +59,8 @@ function Start() {
     var cnt = numOfColums*numOfRows;
     var pacman_remain = 1;
     start_time = new Date();
+
+
     for (var i = 0; i < numOfColums; i++) {
         board[i] = new Array();
         for (var j = 0; j < numOfRows; j++) {
@@ -55,6 +69,19 @@ function Start() {
                 board[i][j] = 5;
             }
             //initalize walls
+            if((i === ghost1.x && j === ghost1.y) ||
+             (i === ghost2.x && j === ghost2.y && numOfMonsters > 1) ||
+              (i === ghost3.x && j === ghost3.y && numOfMonsters > 2)){
+                if (i === ghost1.x && j === ghost1.y){
+                    board[i][j] = 6;
+                }
+                if (i === ghost2.x && j === ghost2.y && numOfMonsters > 1){
+                    board[i][j] = 7;
+                }
+                if (i === ghost3.x && j === ghost3.y && numOfMonsters > 2){
+                    board[i][j] = 8;
+                }
+            }
             else if ((i === 0 && j === 2) || (i === 0 && j === 3) || (i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 19 && j === 7) ||
              (i === 6 && j === 2) || (i === 4 && j === 8) || (i === 5 && j === 8) || (i === 6 && j === 8) || (i === 7 && j === 8) || (i === 8 && j === 5) || (i === 9 && j === 5)) {
                 board[i][j] = 4;
@@ -97,6 +124,8 @@ function Start() {
     interval = setInterval(UpdatePosition, 120);
 
     rewardInterval = setInterval(updateRewardPosition, 500);
+
+    ghostsInterval = setInterval(moveGhosts, 720);
 }
 
 function classifyBallsByColors (){
@@ -239,6 +268,17 @@ function Draw(direction) {
             } else if (board[i][j] === 5) {
                 drawReward();
             }
+            else if (board[i][j] === 6) {
+                context.drawImage(ghost1Img, 60 * ghost1.x, 60 * ghost1.y, 60, 60);
+            }
+            else if (board[i][j] === 7) {
+                context.drawImage(ghost2Img, 60 * ghost2.x, 60 * ghost2.y, 60, 60);
+            }
+            else if (board[i][j] === 8) {
+                context.drawImage(ghost3Img, 60 * ghost3.x, 60 * ghost3.y, 60, 60);
+            }
+            
+           
         }
     }
 }
@@ -266,7 +306,7 @@ function UpdatePosition() {
     }
     //left
     else if (x === 4) {
-        if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4) {
+        if (shape.i < 19 && board[shape.i + 1][shape.j] !== 4) {
             shape.i++;
         }
     }
@@ -499,6 +539,123 @@ function getRandDirection(){
     return Math.floor((Math.random() * 3) + 1);
 }
 
+
+
+function moveGhosts(){
+    if (numOfMonsters == 1){
+        updateGhostPosition(ghost1);
+    }
+    else if (numOfMonsters == 2){
+        updateGhostPosition(ghost1);
+        updateGhostPosition(ghost2);
+
+    }
+    else if (numOfMonsters == 3){
+        updateGhostPosition(ghost1);
+        updateGhostPosition(ghost2);
+        updateGhostPosition(ghost3);
+
+    }
+
+}
+
+function updateGhostPosition(ghost){
+    var col = ghost.x;
+    var row = ghost.y;
+    var direction = getGhostDirection(col, row);
+    //move up
+    if(direction == 1){
+            ghost.y = row - 1; //update ghost position
+    }
+    //move down
+    else if(direction == 2){
+            ghost.y = row + 1; //update ghost position
+    }
+    //move right
+    else if(direction == 3){
+            ghost.x = col + 1; //update ghost position
+    }
+    //move left
+    else if(direction == 4){
+            ghost.x = col - 1; //update ghost position
+    }
+    if (Object.is(ghost,ghost1)){
+        // console.log(ghost.x + "," + ghost.y);
+        // console.log(ghost1.x + "," + ghost1.y);
+        // console.log(col + "," + row);
+        board[ghost.x][ghost.y] = 6;
+        // context.drawImage(ghost1Img, 60 * ghost1.x, 60 * ghost1.y, 60, 60);
+    }
+    else if (Object.is(ghost,ghost2)){
+        board[ghost.x][ghost.y] = 7; 
+        // context.drawImage(ghost2Img, 60 * ghost2.x, 60 * ghost2.y, 60, 60);
+
+    }
+    else if(Object.is(ghost,ghost3)){
+        board[ghost.x][ghost.y] = 8; 
+        // context.drawImage(ghost3Img, 60 * ghost3.x, 60 * ghost3.y, 60, 60); 
+    }
+    if (direction != -1){
+        board[col][row] = 0; //free cell
+    }
+
+}
+
+function getGhostDirection(col, row){
+    var distances = [Infinity, Infinity, Infinity, Infinity];
+    var isValidUp = isValidGhostMove(col,row - 1);
+    var isValidDown = isValidGhostMove(col,row + 1);
+    var isValidLeft = isValidGhostMove(col - 1,row);
+    var isValidRight = isValidGhostMove(col + 1,row);
+    // console.log(isValidUp + "," + isValidDown + "," + isValidLeft + "," + isValidRight)
+    var minDistance;
+    var minIndex;
+    if (isValidUp){
+        distances[0] = calcDistance([shape.i,shape.j],[col,row - 1]);
+    }
+    if (isValidDown){
+        distances[1] = calcDistance([shape.i,shape.j],[col,row + 1]);
+    }
+    if (isValidRight){
+        distances[2] = calcDistance([shape.i,shape.j],[col + 1,row]);
+    }
+    if (isValidLeft){
+        distances[3] = calcDistance([shape.i,shape.j],[col - 1,row]);
+    }
+    minDistance = distances[0];
+    minIndex = 1;
+    for (var i = 1; i < distances.length; i++){
+        
+        if (distances[i] < minDistance){
+            minDistance = distances[i];
+            minIndex = i + 1;
+        }
+    }
+
+    // console.log(distances);
+    // console.log(minIndex);
+
+    if (minDistance !== Infinity){
+        return minIndex;
+    }
+    else{
+        return -1;
+    }
+}
+
+function calcDistance([col1,row1],[col2,row2]){
+    return Math.sqrt(Math.pow(Math.abs(col2 - col1),2) + Math.pow(Math.abs(row2 - row1),2));
+}
+
+function isValidGhostMove(col,row){
+    if (col > numOfColums - 1 || col < 0 || row > numOfRows - 1 || row < 0 ){
+        return false;
+    }
+    if(board[col][row] == 4)
+        return false;
+    return true;
+}
+
 function clearSettings(){
     document.getElementById('upKey').value = "";
     document.getElementById('downKey').value = "";
@@ -723,6 +880,7 @@ function playGame(){
         window.alert("You should login in order to play.If you dont have an account sign up via register")
     }
     else if (validSettings){
+        Start();
         showWindow('game');
     }
     else{
