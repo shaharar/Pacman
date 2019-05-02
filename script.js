@@ -86,11 +86,11 @@ function Start() {
     addEventListener("keyup", function (e) {
         keysDown[e.code] = false;
     }, false);
-    interval = setInterval(UpdatePosition, 250);
+    interval = setInterval(UpdatePosition, 120);
 
     //initialize reward position
-    board[reward.x][reward.y]=5;
-    rewardInterval = setInterval(updateRewardPosition,500);
+    board[reward.x][reward.y] = 5;
+    rewardInterval = setInterval(updateRewardPosition, 700);
 }
 
 
@@ -374,65 +374,53 @@ function setRightKey(event){
 }
 
 function drawReward () {
-    var rewardImg=new Image();
-    rewardImg.src='images/lollipop.png';
-    context.drawImage(rewardImg, 37*reward.x, 37*reward.y,37, 37);
-    // context.beginPath();
-    // context.rect(reward.x, reward.y, 60, 60);
-    // context.fillStyle = "pink"; //color
-    // context.fill();
+    var rewardImg = new Image();
+    rewardImg.src = 'images/lollipop2.png';
+    context.drawImage(rewardImg, 60 * reward.x, 60 * reward.y, 60, 60);
 }
 
 function updateRewardPosition() {
-    
+
     if((reward.x == -1 && reward.y == -1)) { // pacman already ate the reward
         return;
     }
 
     var col = reward.x;
     var row = reward.y;
-
     var randDirection = getRandDirection();
-
     //move up
     if(randDirection == 1){
         if (isValidMove (col, row - 1)) {
             reward.y = row - 1; //update reward position
-            board[reward.x][reward.y] = 5; 
-            board[col][row] = 0; //free cell
         }
     }
     //move down
     else if(randDirection == 2){
         if (isValidMove (col, row + 1)) {
             reward.y = row + 1; //update reward position
-            board[reward.x][reward.y] = 5; 
-            board[col][row] = 0; //free cell
         }
     }
     //move right
     else if(randDirection == 3){
         if (isValidMove (col + 1, row)) {
-            reward.y = row + 1; //update reward position
-            board[reward.x][reward.y] = 5; 
-            board[col][row] = 0; //free cell
+            reward.x = col + 1; //update reward position
         }
     }
     //move left
     else if(randDirection == 4){
         if (isValidMove (col - 1, row)) {
-            reward.y = row + 1; //update reward position
-            board[reward.x][reward.y] = 5; 
-            board[col][row] = 0; //free cell
+            reward.x = col - 1; //update reward position
         }
     }
+    board[reward.x][reward.y] = 5; 
+    board[col][row] = 0; //free cell
 }
 
 function isValidMove(col,row) {
-    if (col > board.length || col <= 0 || row > board.length || row <= 0 ){
+    if (col > board.length - 1 || col < 0 || row > board.length - 1 || row < 0 ){
         return false;
     }
-    if(board[col][row] == 2 || board[col][row] == 3)
+    if(board[col][row] == 2 || board[col][row] == 3 || board[col][row] == 4)
         return false;
     return true;
 }
