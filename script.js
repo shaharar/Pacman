@@ -12,10 +12,10 @@ var ghostsInterval;
 var usersMap = new Map();
 usersMap.set('a',"a");
 var lastDirection;
-var reward = {x:0, y:0};
-var ghost1 = {x:19, y:9};
-var ghost2 = {x:0, y:9};
-var ghost3 = {x:19, y:0};
+var reward;
+var ghost1;
+var ghost2;
+var ghost3;
 var numOfColums = 20;
 var numOfRows = 10;
 
@@ -51,11 +51,10 @@ var color5P;
 var color15p;
 var color25P;
 var gameTime;
+var totalDuration;
 var numOfMonsters;
 var validSettings;
 
-
-// Start();
 
 hideAllWindows();
 showWindow('welcome');
@@ -64,16 +63,20 @@ function Start() {
     board = new Array();
     score = 0;
     lives = 3;
-    //time_elapsed = 0;
+    time_elapsed = 0;
     pac_color = "yellow";
     lastDirection = 0;
     var cnt = numOfColums*numOfRows;
     var pacman_remain = 1;
     start_time = new Date();
+    reward = {x:0, y:0};
+    ghost1 = {x:19, y:9};
+    ghost2 = {x:0, y:9};
+    ghost3 = {x:19, y:0};
 
     setNumOfFoodBalls();
 
-    for(i = 0; i <6; i++){ //initialize food array
+    for(i = 0; i < 6; i++){ //initialize food array
         foodArr[i] = -1;
     }
     for (var i = 0; i < numOfColums; i++) {
@@ -213,6 +216,7 @@ function classifyBallsByColors (){
 
 function newGame() {
     clearAllIntervals();
+    numOfBalls = document.getElementById('numOfBalls').value;
     Start();
     showWindow('game');
 }
@@ -407,33 +411,50 @@ function UpdatePosition() {
         board[shape.i][shape.j] = 2;
     }
 
+    /* pacman ate medicine - gets one more life */
+    if (shape.i == medicine.x && shape.j == medicine.y) {
+        lives++;
+        medicine.x = -1;
+        medicine.y = -1;
+        board[shape.i][shape.j] = 9;
+    }
+
+    /* pacman ate clock - gets more time for game */
+    if (shape.i == clock.x && shape.j == clock.y) {
+        totalDuration += 10;
+        clock.x = -1;
+        clock.y = -1;
+        board[shape.i][shape.j] = 10;
+    }
+
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
-    if (score >= 20 && time_elapsed <= 10) {
-        pac_color = "green";
-    }
+    // if (score >= 20 && time_elapsed <= 10) {
+    //     pac_color = "green";
+    // }
 
     /* ---End Of The Game--- */
-    // if ((numOfBall_5 + numOfBall_15 + numOfBall_25) === 0) {
+
+    // if ((numOfBall_5 + numOfBall_15 + numOfBall_25) == 0) {
     //     clearAllIntervals();
     //     window.alert("Game completed");
     // }
 
-    // if (time_elapsed >= gameTime){
-    //     if (score < 150){
-    //         clearAllIntervals();
-    //         window.alert("You can do better");
-    //     }
-    //     else{
-    //         clearAllIntervals();
-    //         window.alert("We have a Winner!!!");
-    //     }
-    // }
-
-    else {
-        Draw(x);
+    if (time_elapsed >= totalDuration){
+        if (score < 150){
+            clearAllIntervals();
+            window.alert("You can do better");
+        }
+        else{
+            clearAllIntervals();
+            window.alert("We have a Winner!!!");
+        }
     }
+
+  //  else {
+        Draw(x);
+  //  }
 }
 
 
@@ -616,7 +637,7 @@ function isValidMove(col,row) {
     if (col > numOfColums - 1 || col < 0 || row > numOfRows - 1 || row < 0 ){
         return false;
     }
-    if(board[col][row] == 2 || board[col][row] == 4)  // add ghosts
+    if(board[col][row] == 2 || board[col][row] == 4 || board[col][row] == 6 || board[col][row] == 7 || board[col][row] == 8)  // add ghosts
         return false;
     return true;
 }
@@ -811,13 +832,7 @@ function setGameSettings() {
     }
     else{
         validSettings = settingsValidation();
-        if (validSettings){
-            //set keys
-            // keyUp = document.getElementById('upKey').value;
-            // keyDown = document.getElementById('downKey').value;
-            // keyLeft = document.getElementById('leftKey').value;
-            // keyRight = document.getElementById('rightKey').value;
-    
+        if (validSettings){    
             //set number of balls
             numOfBalls = document.getElementById('numOfBalls').value;
     
@@ -828,6 +843,7 @@ function setGameSettings() {
     
             //set game duration
             gameTime = document.getElementById('gameDuration').value;
+            totalDuration = parseInt(gameTime);
     
             //set number of monsters
             numOfMonsters = document.getElementById('numOfMonsters').value;
@@ -864,6 +880,8 @@ function setRandomGameSettings(){
 
       //set game duration
       gameTime = Math.floor(Math.random() * 840) + 60;
+      totalDuration = gameTime;
+      gameTime = "" + totalDuration;
 
       //set number of monsters
       numOfMonsters = Math.floor(Math.random() * 2) + 1;
