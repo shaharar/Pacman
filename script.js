@@ -19,6 +19,8 @@ var ghost3;
 var numOfColums = 20;
 var numOfRows = 10;
 
+var food_remain;
+var totalBalls;
 var numOfBall_5;
 var numOfBall_15;
 var numOfBall_25;
@@ -68,6 +70,8 @@ function Start() {
     lastDirection = 0;
     var cnt = numOfColums*numOfRows;
     var pacman_remain = 1;
+    food_remain = numOfBalls;
+    totalBalls = numOfBalls;
     start_time = new Date();
     reward = {x:0, y:0};
     ghost1 = {x:19, y:9};
@@ -107,8 +111,8 @@ function Start() {
             //initialize balls (without classification by colors)
             } else {
                 var randomNum = Math.random();
-                if (randomNum <= 1.0 * numOfBalls / cnt) {
-                    numOfBalls--;
+                if (randomNum <= 1.0 * food_remain / cnt) {
+                    food_remain--;
                     board[i][j] = 1;
                 } else {
                     board[i][j] = 0;
@@ -122,13 +126,14 @@ function Start() {
     pacman_remain--;
     
     //initialize the rest of total balls (if remained)
-    while (numOfBalls > 0) {
+    while (food_remain > 0) {
         var emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 1;
-        numOfBalls--;
+        food_remain--;
     }
 
     classifyBallsByColors();
+    setNumOfFoodBalls();
 
     //initialize medicne position
     var emptyCell = findRandomEmptyCell(board);
@@ -216,7 +221,7 @@ function classifyBallsByColors (){
 
 function newGame() {
     clearAllIntervals();
-    numOfBalls = document.getElementById('numOfBalls').value;
+    numOfBalls = totalBalls;
     Start();
     showWindow('game');
 }
@@ -358,6 +363,13 @@ function Draw(direction) {
 }
 
 function UpdatePosition() {
+
+    if (numOfBalls == 0) {
+        clearAllIntervals();
+        window.alert("Game completed");
+        return;
+    }
+    
     board[shape.i][shape.j] = 0;
     var x = GetKeyPressed();
     //up
@@ -401,6 +413,8 @@ function UpdatePosition() {
         else if (color == color25P){
             score += 25;
         }
+        numOfBalls--;
+        console.log(numOfBalls);
     }
 
     /* pacman ate reward - gets bonus */
@@ -436,11 +450,6 @@ function UpdatePosition() {
 
     /* ---End Of The Game--- */
 
-    // if ((numOfBall_5 + numOfBall_15 + numOfBall_25) == 0) {
-    //     clearAllIntervals();
-    //     window.alert("Game completed");
-    // }
-
     if (time_elapsed >= totalDuration){
         if (score < 150){
             clearAllIntervals();
@@ -456,6 +465,15 @@ function UpdatePosition() {
         Draw(x);
   //  }
 }
+
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+      if ((new Date().getTime() - start) > milliseconds){
+        break;
+      }
+    }
+  }
 
 
 function showWindow(id){
@@ -720,7 +738,7 @@ function updateGhostPosition(ghost){
         }
     }
 
-
+    /* ghost ate pacman - losts one life */
     if (ghost.x == shape.i && ghost.y == shape.j) {
         score -= 10;
         lives--;
@@ -730,6 +748,7 @@ function updateGhostPosition(ghost){
             window.alert("You Lost!");
         }
         else{
+            sleep(1000);
             ghost1 = {x:19, y:9};
             ghost2 = {x:0, y:9};
             ghost3 = {x:19, y:0};
