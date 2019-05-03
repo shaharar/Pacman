@@ -447,6 +447,7 @@ function UpdatePosition() {
     // }
 
     if (time_elapsed >= totalDuration){
+        gameMusic.pause();
         if (score < 150){
             clearAllIntervals();
             window.alert("You can do better");
@@ -457,15 +458,9 @@ function UpdatePosition() {
         }
     }
 
-<<<<<<< HEAD
     // else {
         Draw(x);
     // }
-=======
-  //  else {
-        Draw(x);
-  //  }
->>>>>>> d1b2a677493d71515664ee74f12d32066128dd77
 }
 
 
@@ -1028,6 +1023,7 @@ function playGame(){
         numOfBalls = document.getElementById('numOfBalls').value;
         Start();
         showWindow('game');
+        gameMusic.currentTime = 0;
         gameMusic.play();
     }
     else{
