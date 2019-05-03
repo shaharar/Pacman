@@ -371,6 +371,7 @@ function UpdatePosition() {
 
     if (numOfBalls == 0) {
         clearAllIntervals();
+        gameMusic.pause();
         window.alert("Game completed");
         return;
     }
@@ -457,9 +458,9 @@ function UpdatePosition() {
 
     if (time_elapsed >= totalDuration){
         gameMusic.pause();
-        if (score < 150){
+        if (score < 1500){
             clearAllIntervals();
-            window.alert("You can do better");
+            window.alert("You can do better, you gained only " + score + " points");
         }
         else{
             clearAllIntervals();
@@ -483,6 +484,10 @@ function sleep(milliseconds) {
 
 
 function showWindow(id){
+    if (id != "game"){
+        clearAllIntervals();
+        gameMusic.pause();
+    }
     if (id !== "about"){
         hideAllWindows();
     }
@@ -751,6 +756,7 @@ function updateGhostPosition(ghost){
         
         if (lives == 0){
             clearAllIntervals();
+            gameMusic.pause();
             window.alert("You Lost!");
         }
         else{
