@@ -97,7 +97,7 @@ function Start() {
                 }
             }
             //initalize walls
-            else if ((i === 0 && j === 2) || (i === 0 && j === 3) || (i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 19 && j === 7) ||
+            else if ((i === 14 && j === 5) || (i === 14 && j === 6) || (i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 19 && j === 7) ||
              (i === 6 && j === 2) || (i === 4 && j === 8) || (i === 5 && j === 8) || (i === 6 && j === 8) || (i === 7 && j === 8) || (i === 8 && j === 5) || (i === 9 && j === 5)) {
                 board[i][j] = 4;
             //initialize balls (without classification by colors)
@@ -192,7 +192,6 @@ function classifyBallsByColors (){
                         ballColor = color25P;
                     }
                 }
-            //    if(ballsAmount > 0){
                 colorsBoard[i][j] = ballColor;
                 if(ballsAmount == numOfBall_5){
                     numOfBall_5--;                        
@@ -203,8 +202,10 @@ function classifyBallsByColors (){
                 else if(ballsAmount == numOfBall_25){
                     numOfBall_25--;                        
                 }  
+            }
+            else{
+                colorsBoard[i][j] = -1;
             }              
-        //    }
         }
     }
 }
@@ -349,7 +350,6 @@ function Draw(direction) {
            
         }
     }
-   // console.log(board);
 }
 
 function UpdatePosition() {
@@ -637,10 +637,10 @@ function getGhostIdx(ghost) {
         return 0;
     }
     if (Object.is(ghost,ghost2)){
-        return 2;
+        return 1;
     }
     if (Object.is(ghost,ghost3)){
-        return 4;
+        return 2;
     }
 }
 
@@ -648,13 +648,9 @@ function updateGhostPosition(ghost){
     var col = ghost.x;
     var row = ghost.y;
 
-    // console.log(col);
-    // console.log(row);
-    // console.log(foodArr);
-
     var ghostIdx = getGhostIdx(ghost); // idx 0 for ghost1, idx 1 for ghost2 and idx 2 for ghost3
     if (foodArr[ghostIdx] != -1 && foodArr[ghostIdx + 3] != -1) {
-        board[col][row] = 1;
+        board[foodArr[ghostIdx]][foodArr[ghostIdx + 3]] = 1;
         foodArr[ghostIdx] = -1;
         foodArr[ghostIdx + 3] = -1;
     }
@@ -677,23 +673,6 @@ function updateGhostPosition(ghost){
     else if(direction == 4){
             ghost.x = col - 1; //update ghost position
     }
-    // if (Object.is(ghost,ghost1)){
-    //     board[ghost.x][ghost.y] = 6;
-    //     // context.drawImage(ghost1Img, 60 * ghost1.x, 60 * ghost1.y, 60, 60);
-    // }
-    // else if (Object.is(ghost,ghost2)){
-    //     board[ghost.x][ghost.y] = 7; 
-    //     // context.drawImage(ghost2Img, 60 * ghost2.x, 60 * ghost2.y, 60, 60);
-
-    // }
-    // else if(Object.is(ghost,ghost3)){
-    //     board[ghost.x][ghost.y] = 8; 
-    //     // context.drawImage(ghost3Img, 60 * ghost3.x, 60 * ghost3.y, 60, 60); 
-    // }
-
-
-   // console.log(foodArr);
-
 
     if (direction != -1){
         if (board[ghost.x][ghost.y] == 1) { //ghost moves to food cell
@@ -701,7 +680,9 @@ function updateGhostPosition(ghost){
             foodArr[ghostIdx + 3] = ghost.y;
         }  
         board[ghost.x][ghost.y] = ghostIdx + 6; // ghost1 is 6, ghost2 is 7, ghost3 is 8
-        board[col][row] = 0; //free cell
+        if (board[col][row] != 1){
+            board[col][row] = 0; //free cell
+        }
     }
 
 
