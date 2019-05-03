@@ -39,6 +39,7 @@ clockImg.src = 'images/clock.png';
 var foodArr = new Array();
 var medicine = {x:-1, y:-1};
 var clock = {x:-1, y:-1};
+var lastRewardPos = -1;
 
 //SETTINGS
 var keyUp = 'ArrowUp';
@@ -562,6 +563,16 @@ function updateRewardPosition() {
     var row = reward.y;
     var updated = false;
 
+    if (lastRewardPos == 1){
+        board[col][row] = 1;
+    }
+    else if (lastRewardPos == 9){
+        board[col][row] = 9;
+    }
+    else if (lastRewardPos == 10){
+        board[col][row] = 10;
+    }
+
     while (!updated){
         var randDirection = getRandDirection();
         //move up
@@ -594,8 +605,11 @@ function updateRewardPosition() {
             }
         }
     }
-    board[reward.x][reward.y] = 5; 
-    board[col][row] = 0; //free cell
+    lastRewardPos = board[reward.x][reward.y];
+    board[reward.x][reward.y] = 5;
+    if (board[col][row] != 1 && board[col][row] != 9 && board[col][row] != 10) {
+        board[col][row] = 0; //free cell
+    }
 }
 
 function isValidMove(col,row) {
