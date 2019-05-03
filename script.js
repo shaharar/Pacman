@@ -19,6 +19,8 @@ var ghost3 = {x:19, y:0};
 var numOfColums = 20;
 var numOfRows = 10;
 
+var gameMusic = document.getElementById("myAudio");
+
 var numOfBall_5;
 var numOfBall_15;
 var numOfBall_25;
@@ -63,7 +65,7 @@ function Start() {
     board = new Array();
     score = 0;
     lives = 3;
-    //time_elapsed = 0;
+    time_elapsed = 0;
     pac_color = "yellow";
     lastDirection = 0;
     var cnt = numOfColums*numOfRows;
@@ -212,8 +214,11 @@ function classifyBallsByColors (){
 
 function newGame() {
     clearAllIntervals();
+    numOfBalls = document.getElementById('numOfBalls').value;
     Start();
     showWindow('game');
+    gameMusic.currentTime = 0;
+    gameMusic.play();
 }
 
 function placePacmanRandomly(){
@@ -256,6 +261,7 @@ function GetKeyPressed() {
 }
 
 function Draw(direction) {
+    console.log("draw");
     if (direction === 0){ 
         if (lastDirection !== 0){
             direction = lastDirection;
@@ -409,9 +415,9 @@ function UpdatePosition() {
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
-    if (score >= 20 && time_elapsed <= 10) {
-        pac_color = "green";
-    }
+    // if (score >= 20 && time_elapsed <= 10) {
+    //     pac_color = "green";
+    // }
 
     /* ---End Of The Game--- */
     // if ((numOfBall_5 + numOfBall_15 + numOfBall_25) === 0) {
@@ -430,9 +436,9 @@ function UpdatePosition() {
     //     }
     // }
 
-    else {
+    // else {
         Draw(x);
-    }
+    // }
 }
 
 
@@ -751,8 +757,9 @@ function isValidGhostMove(col,row){
     if (col > numOfColums - 1 || col < 0 || row > numOfRows - 1 || row < 0 ){
         return false;
     }
-    if(board[col][row] == 4)
+    if(board[col][row] == 4 || board[col][row] == 5 || board[col][row] == 6 || board[col][row] == 7 || board[col][row] == 8 || board[col][row] == 9 || board[col][row] == 10){
         return false;
+    }
     return true;
 }
 
@@ -981,8 +988,10 @@ function playGame(){
     }
     else if (validSettings){
         clearAllIntervals();
+        numOfBalls = document.getElementById('numOfBalls').value;
         Start();
         showWindow('game');
+        gameMusic.play();
     }
     else{
         window.alert("You should either press save settings, set game settings or fix errors above in order to be able to play")
