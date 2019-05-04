@@ -331,6 +331,7 @@ span.validate  {
 
 /* ------------------Game----------------- */
 canvas{
+	position: relative;
 	background: black;
 	border: 60px solid transparent;
 	border-image: url(images/wallBlue.jpg) 20% round;
