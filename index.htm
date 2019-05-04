@@ -55,7 +55,7 @@
                     </div>  
                 </div> 
             </div>
-            
+
             <div id="login">
                 <br>
                     <h2>Login</h2>
@@ -170,28 +170,29 @@
 
             </div>
             <div id="game">
-                USERNAME:
-                <input id="lblUsername" type="text"/>
-                <br/>
-                LIVES:
-                <input id="lblLife" type="text"/>
-                <br/>
-                SCORE:
-                <input id="lblScore" type="text"/>
-                <br/>
-                TIME:
-                <input id="lblTime" type="text"/>
-                <br/>
-                <br>
+                <div id="gameInfo">
+                        <label>USERNAME:</label>
+                        <input id="lblUsername" type="text"/>
+                        <label>LIVES:</label>
+                        <input id="lblLife" type="text"/>
+                        <label>SCORE:</label>
+                        <input id="lblScore" type="text"/>
+                        <label>TIME:</label>
+                        <input id="lblTime" type="text"/>
+                </div>
+                <div id="gameBoard">
+                        <center>
+                                <canvas id="canvas" height="600" width="1200"></canvas> 
+                        </center>
+                </div>
                 <audio id="myAudio">
                     <source src="gameMusic.mp3" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
-                <center>
-                        <canvas id="canvas" height="600" width="1200"></canvas> 
-                </center>
-                <button type="button" id="newGameBtn" onclick="newGame()">New Game</button>
+                <div id="newGame">
+                        <button type="button" id="newGameBtn" onclick="newGame()">New Game</button>
                 </div>
+            </div>
         </content>
         <footer>
             <!-- <img src="images/logo3.png"  height="65"> -->

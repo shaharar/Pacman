@@ -45,7 +45,7 @@ li{
 	position: relative;
 	top:30%;
 	display:inline;
-	padding: 7%;
+	padding: 6%;
 }
 
 a{
@@ -333,12 +333,98 @@ span.validate  {
 canvas{
 	position: relative;
 	background: black;
-	border: 60px solid transparent;
-	border-image: url(images/wallBlue.jpg) 20% round;
-	/* border-image-width: 60px; */
+	border: 8px solid transparent;
+	border-image: url(images/wallBlue.jpg) 10% round;
+	margin-right: 45%;
+	margin-bottom: 35%;
+	margin-block-end: 20%;
+	/* margin-left: 20%; */
+	
 }
+
+/* #gameInfo { */
+	/* float: left; */
+    /* white-space:nowrap;
+    font-size:15px;
+    font-family: 'Permanent Marker', cursive;
+    color: pink;
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: black; */
+/* } */
+
+#gameInfo label {
+	display: inline;
+    white-space:nowrap;
+    font-size:15px;
+	/* font-family: 'Permanent Marker', cursive; */
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	color: #ccb639da;
+	/* color: black; */
+    -webkit-text-stroke-width: 0.5px;
+	-webkit-text-stroke-color: black;
+	/* -webkit-text-stroke-color:#ccb639da; */
+}
+
+#gameInfo input {    white-space:nowrap;
+	font-size: 16px;
+	height: 10px;
+}
+
+#lblLife {
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    width: 100px;
+    padding: 1em;
+	background-color: unset;
+	text-align: center;
+    -webkit-transition: 0.35s ease-in-out;
+    -moz-transition: 0.35s ease-in-out;
+    -o-transition: 0.35s ease-in-out;
+    transition: 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+}
+#lblTime {
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    width: 100px;
+    padding: 1em;
+	background-color: unset;
+	text-align: center;
+    -webkit-transition: 0.35s ease-in-out;
+    -moz-transition: 0.35s ease-in-out;
+    -o-transition: 0.35s ease-in-out;
+    transition: 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+}
+#lblScore {
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    width: 100px;
+    padding: 1em;
+	background-color: unset;
+	text-align: center;
+    /* -webkit-transition: 0.35s ease-in-out;
+    -moz-transition: 0.35s ease-in-out;
+    -o-transition: 0.35s ease-in-out;
+    transition: 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out; */
+}
+
+#lblUsername {
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	width: 100px;
+    padding: 1em;
+	background-color: unset;
+	text-align: center;
+    -webkit-transition: 0.35s ease-in-out;
+    -moz-transition: 0.35s ease-in-out;
+    -o-transition: 0.35s ease-in-out;
+    transition: 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+}
+
+
 #newGameBtn {
-	left: 1%;
+	left: 80%;
+	display: inline;
+	top: 40%;
 }
 
 /* ----------------------------Footer----------------------------- */
