@@ -1,7 +1,8 @@
 
 header{
   position: absolute;
-	color: black;
+	/* color: black; */
+	/* color: white; */
 	font: bold Georgia, serif;
 	font-size: 500%;
 	top: 0px;
@@ -9,7 +10,11 @@ header{
 	width: 100%;
 	height: 15%;
 	text-align: center;
-	background-color: rgb(219, 176, 176);
+	/* background-color:black; */
+	background-image: url("images/background.PNG");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 nav{
@@ -17,16 +22,28 @@ nav{
 	top: 15%;
 	left: 0px;
 	width: 100%;
-	height: 5%;
-	background-color: rgb(218, 218, 196);
+	height: 7%;
+	background-color:rgba(0, 0, 0, 0.911);
+	text-align: center;
 }
 
 li{
-    display: inline;
+	position: relative;
+	top:30%;
+	display:inline;
+	padding: 7%;
 }
 
 a{
-    text-decoration: none;
+	color: white;
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	font-size: 20px;
+	text-decoration: none;
+}
+
+a:hover{
+	text-decoration: transparent;
+	color: 	#DAA520;
 }
 
 
@@ -34,10 +51,10 @@ content{
 	/* background-image: url(images/backgroundBlack.jpg); */
 	background-color: lightgray; 
 	position: absolute;
-	top: 20%;
+	top: 22%;
 	left: 0px;
 	width: 100%;
-	height: 75%;
+	height: 73%;
 }
 
 #welcome{
@@ -55,16 +72,19 @@ content{
 
 button{
 	position: absolute;
-	background-color: white;
-	color: black;
+	/* background-color: white; */
+	background-image: url("images/background.PNG");
+	color: white;
 	text-align: center;
 	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-	font-size: 40px;
+	font-size: 30px;
 	width: 15%;
 	height: 10%;
 	border-radius: 12px;
+	/* border-width: 8px; */
 
 }
+
 
 button#saveSettingsBtn{
 	color: black;
@@ -73,13 +93,22 @@ button#saveSettingsBtn{
 	font-size: 20px;
 }
 #registerBtn{
-	top: 35%;
+	top: 45%;
 	left: 5%;
 }
 
 #loginBtn{
-	top: 50%;
+	top: 60%;
 	left: 5%;
+}
+
+#registerBtn:hover{
+	/* color:#d4af37 */
+	background-image: url("images/glitterGold.PNG");
+}
+#loginBtn:hover{
+	/* color:#d4af37 */
+	background-image: url("images/glitterGold.PNG");
 }
 
 canvas{
@@ -184,8 +213,9 @@ footer{
 	left: 0px;
 	width: 100%;
 	height: 5%;
-	background-color: blue;
+	background-color: black;
 }
+
 
 
 
@@ -322,3 +352,21 @@ span.validate  {
 #newGameBtn {
 	left: 1%;
 }
+
+
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+	float: left;
+	width: 33.33%;
+	/* padding: 2px; */
+  }
+  
+  /* Clear floats after image containers */
+  .row::after {
+	content: "";
+	clear: both;
+	display: table;
+  }
+
+ 
