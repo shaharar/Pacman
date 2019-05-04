@@ -503,6 +503,9 @@ function showWindow(id){
     if (id !== "about"){
         hideAllWindows();
     }
+    if (id != "settings"){
+        clearSettingsErrors();
+    }
     else{
         about();
     }
