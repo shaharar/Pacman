@@ -1,4 +1,4 @@
-
+/* --------------------------Header----------------------------- */
 header{
   position: absolute;
 	/* color: black; */
@@ -16,7 +16,21 @@ header{
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 }
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+	float: left;
+	width: 33.33%;
+	/* padding: 2px; */
+  }
+  
+  /* Clear floats after image containers */
+  .row::after {
+	content: "";
+	clear: both;
+	display: table;
+  }
 
+  /* --------------------------Menu-------------------------- */
 nav{
 	position: absolute;
 	top: 15%;
@@ -46,7 +60,7 @@ a:hover{
 	color: 	#ccb639da;
 }
 
-
+/* ------------------------------Content--------------------------------- */
 content{
 	/* background-image: url(images/backgroundBlack.jpg); */
 	background-color: lightgray; 
@@ -55,19 +69,6 @@ content{
 	left: 0px;
 	width: 100%;
 	height: 73%;
-}
-
-#welcome{
-	/* visibility: hidden; */
-	position: absolute;
-	top: 0%;
-	left: 0px;
-	width: 100%;
-	height: 100%;
-	background-image:url("images/wallpaper.jpg");
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
 }
 
 button{
@@ -85,14 +86,19 @@ button{
 
 }
 
-
-/* button#saveSettingsBtn{
-	color: black;
-	width: 10%;
-	height: 5%;
-	font-size: 20px;
-} */
-
+/* --------------------Welcome---------------------- */
+#welcome{
+	/* visibility: hidden; */
+	position: absolute;
+	top: 0%;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background-image:url("images/wallpaper.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
 /* Welcome Buttons */
 #registerBtn{
 	top: 45%;
@@ -111,15 +117,8 @@ button{
 	background-image: url("images/glitterGold.PNG");
 }
 
-/* Game */
-canvas{
-	background: black;
-	border: 60px solid transparent;
-	border-image: url(images/wallBlue.jpg) 20% round;
-	/* border-image-width: 60px; */
-}
 
-/* Login */
+/* -------------------Login----------------- */
   form#loginForm{
 	  height: 100%;
   }
@@ -173,17 +172,8 @@ canvas{
 
 /* End Login */
 
-footer{
-	position: absolute;
-	top: 95%;
-	left: 0px;
-	width: 100%;
-	height: 5%;
-	background-color: black;
-}
 
-
-/* About - The Modal (background) */
+/* ------------------------------------About------------------------------------ */
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -228,7 +218,7 @@ footer{
 	color: red;
 }
 
-/* Registration */
+/* -------------------------Registration-------------------------- */
 
 form#register_form p { 
 	padding:2px;
@@ -308,30 +298,7 @@ span.validate  {
 /* End Registration */
 
 
-#newGameBtn {
-	left: 1%;
-}
-
-
-
-/* Three image containers (use 25% for four, and 50% for two, etc) */
-.column {
-	float: left;
-	width: 33.33%;
-	/* padding: 2px; */
-  }
-  
-  /* Clear floats after image containers */
-  .row::after {
-	content: "";
-	clear: both;
-	display: table;
-  }
-
-
-  /* Settings */
-
-  
+  /* ----------------------Settings-------------------------- */
   #settings{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: 14px;
@@ -361,4 +328,24 @@ span.validate  {
 #playBtn:hover{
     transform: scale(1.05);
 }
- 
+
+/* ------------------Game----------------- */
+canvas{
+	background: black;
+	border: 60px solid transparent;
+	border-image: url(images/wallBlue.jpg) 20% round;
+	/* border-image-width: 60px; */
+}
+#newGameBtn {
+	left: 1%;
+}
+
+/* ----------------------------Footer----------------------------- */
+footer{
+	position: absolute;
+	top: 95%;
+	left: 0px;
+	width: 100%;
+	height: 5%;
+	background-color: black;
+}
