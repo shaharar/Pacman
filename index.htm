@@ -37,25 +37,21 @@
             </div>
             <div id="register">
                 <div id="wrap">
-                    <div id="wrap2">  
-                   
-                       <h2 class="new_account">Sign Up</h2> 
-                    
-                    <form method="post" id="register_form">
-                        
-                            <p class="validate_msg">Please fix the errors below!</p>
-
-                            <p> <label for="username">Username</label> <input name="username" type="text" /> <span class="val_username"></span>            
-                            <p> <label for="password">Password</label>  <input name="password" type="password" /> <span class="val_pass"></span> </p>
-                            <p> <label for="repassword">Repeat Password</label>  <input name="repassword" type="password" /> <span class="val_repass"></span> </p>
-                            <p> <label for="fname">First Name</label> <input name="fname" type="text" /> <span class="val_fname"></span> </p> 
-                            <p> <label for="lname">Last Name</label>  <input name="lname" type="text" />  <span class="val_lname"></span> </p>
-                            <p> <label for="email">Email</label> <input name="email" type="text" /> <span class="val_email"></span> </p>
-                            <p> <label for="birthDate">Birth Date</label> <input name="birthDate" type="date" placeholder="Enter Birth Date" > <span class="val_birthdate"></span> </p>
+                    <div id="wrap2">                     
+                       <h2 class="signUp">Sign Up</h2>                     
+                        <form method="post" id="register_form">
                             
-                            <input type="button" name="submit" class="submitBtn">Submit</input>
+                                <p class="validate_msg">Please fix the errors below:</p>
+
+                                <p> <label for="username">Username: </label> <input name="username" type="text" /> <span class="val_username"></span>            
+                                <p> <label for="password">Password: </label>  <input name="password" type="password" /> <span class="val_pass"></span> </p>
+                                <p> <label for="repassword">Repeat Password: </label>  <input name="repassword" type="password" /> <span class="val_repass"></span> </p>
+                                <p> <label for="fname">First Name: </label> <input name="fname" type="text" /> <span class="val_fname"></span> </p> 
+                                <p> <label for="lname">Last Name: </label>  <input name="lname" type="text" />  <span class="val_lname"></span> </p>
+                                <p> <label for="email">Email: </label> <input name="email" type="text" /> <span class="val_email"></span> </p>
+                                <p> <label for="birthDate">Birth Date: </label> <input name="birthDate" type="date" placeholder="Enter Birth Date" > <span class="val_birthdate"></span> </p>
+                                <center><input type="button" name="submit" value="Submit" class="submitBtn"></input></center>
                     </form>
-                   
                     </div>  
                 </div> 
             </div>
@@ -76,14 +72,14 @@
                             <br>
                             <label for="psw"><b>Password: </b></label>
                             <input type="password" id="loginPsw" placeholder="Enter Password" name="psw" >
-                            <!-- <input type="button" class="submitLogBtn" onclick="loginValidation()">Submit</input> -->
+                            <!-- <input type="button" class="submitLogBtn" value="Login" onclick="loginValidation()"></input> -->
+                            <button type="submit" class="submitLogBtn" onclick="loginValidation()">Login</button>
                         </center>
                     </div>
-                    <button type="submit" class="submitLogBtn" onclick="loginValidation()">Login</button>
                 </form>
             </div>
 
-            <div id="settings"> 
+            <!-- <div id="settings"> 
 
                 <p>choose keyboard keys to control pacman's movement:</p>
                     <label for="upKey"><b>UP key</b></label>
@@ -143,9 +139,81 @@
                     <br>
                     <br>
                     <button type="button" id="randomBtn" onclick="setRandomGameSettings()">Random</button>
+            </div> -->
 
-                
-            </div>
+
+                     
+<div id="settings"> 
+
+        <div id="properties">
+
+            <p>choose keyboard keys to control pacman's movement:</p>
+            <label for="upKey"><b>UP key</b></label>
+            <input type="text" id="upKey" placeholder="Press any key" name="upKey" onkeyup="setUpKey(event)">
+            <p id="errorMsgUpKey" class="errorMsg"></p>
+
+            <label for="downKey"><b>DOWN key</b></label>
+            <input type="text" id="downKey" placeholder="Press any key" name="downKey" onkeyup="setDownKey(event)">
+            <p id="errorMsgDownKey" class="errorMsg"></p>
+
+            <label for="leftKey"><b>LEFT key</b></label>
+            <input type="text" id="leftKey" placeholder="Press any key" name="leftKey" onkeyup="setLeftKey(event)">
+            <p id="errorMsgLeftKey" class="errorMsg"></p> 
+
+            <label for="rightKey"><b>Right key</b></label>
+            <input type="text" id="rightKey" placeholder="Press any key" name="rightKey" onkeyup="setRightKey(event)">
+            <p id="errorMsgRightKey" class="errorMsg"></p> 
+
+            <p>set required number of balls (please choose a number between 50 to 90):</p>
+            <label for="numOfBalls"><b>Number Of Balls</b></label>
+            <input type="text" id="numOfBalls" placeholder="Enter number of balls" name="numOfBalls">
+            <p id="errorMsgNumOfBalls" class="errorMsg"></p>
+
+            <p>select requested ball colors (please choose a different color for each kind of form):</p>
+            <label for="color5P"><b>color of 5 points balls:</b></label>
+            <input type="color" id="color5P" name="color5P">
+
+            <label for="color15P"><b>color of 15 points balls:</b></label>
+            <input type="color" id="color15P" name="color15P">
+    
+
+            <label for="color25P"><b>color of 25 points balls:</b></label>
+            <input type="color" id="color25P" name="color25P">
+            <p id="errorMsgColors" class="errorMsg"></p>
+
+            <p>select requested game duration (minimum 60 sec):</p>
+            <label for="gameDuration"><b>GAME duration</b></label>
+            <input type="text" id="gameDuration" placeholder="Enter game duration" name="gameDuration">
+            <p id="errorMsgGameDuration" class="errorMsg"></p>
+
+            <p>select requested number of monsters (please choose a number between 1 to 3):</p>
+            <label for="numOfMonsters"><b>Number Of Monsters</b></label>
+            <input type="text" id="numOfMonsters" placeholder="Enter number of monsters" name="numOfMonsters">
+            <p id="errorMsgNumOfMonsters" class="errorMsg"></p>
+
+        </div>
+
+        <div id="buttons">
+            <button type="button" id="randomBtn" onclick="setRandomGameSettings()">Random</button>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <button type="button" id="saveSettingsBtn" onclick="setGameSettings()">Save Settings</button>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <button type="button" id="playBtn" onclick="playGame()">Play</button>
+        </div>    
+    </div>
+
+
+
             <div id="about">
                 <!-- The Modal -->
                 <div id="myModal" class="modal">

@@ -43,7 +43,7 @@ a{
 
 a:hover{
 	text-decoration: transparent;
-	color: 	#DAA520;
+	color: 	#ccb639da;
 }
 
 
@@ -86,22 +86,22 @@ button{
 }
 
 
-button#saveSettingsBtn{
+/* button#saveSettingsBtn{
 	color: black;
 	width: 10%;
 	height: 5%;
 	font-size: 20px;
-}
+} */
+
+/* Welcome Buttons */
 #registerBtn{
 	top: 45%;
 	left: 5%;
 }
-
 #loginBtn{
 	top: 60%;
 	left: 5%;
 }
-
 #registerBtn:hover{
 	/* color:#d4af37 */
 	background-image: url("images/glitterGold.PNG");
@@ -111,56 +111,23 @@ button#saveSettingsBtn{
 	background-image: url("images/glitterGold.PNG");
 }
 
+/* Game */
 canvas{
 	background: black;
 	border: 60px solid transparent;
 	border-image: url(images/wallBlue.jpg) 20% round;
 	/* border-image-width: 60px; */
 }
-/* #game{
-	visibility: hidden;
-} */
 
-/* Add padding to containers */
-/* .regContainer {
-	position: absolute;
-	top: 10%;
-	left: 35%;
-	width: 100%;
-	height: 100%;
-	background-color: white;
-  } */
-  
-  /* Full-width input fields */
-  /* input[type=text], input[type=password] {
-	width: 25%;
-	height: 4%;
-	display: block;
-	border: 1px solid #ccc;
-	background: #f1f1f1;
-	font-family: open sans-serif;
-	box-sizing: border-box;
-  }
-  
-  input[type=text]:focus, input[type=password]:focus  {
-	background-color: #ddd;
-	outline: none;
-  }
-
-  h1{
-	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  } */
-	
+/* Login */
   form#loginForm{
 	  height: 100%;
   }
-
   .logContainer {
 	/* position: relative; */
 	width: 100%;
 	height: 100%;
   }
-
   .logContainer label {
 	font-size: 16px;
 	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -168,46 +135,43 @@ canvas{
 	text-align: center;
 	padding-right: 11%;
   }
-
-
   .logContainer input#loginUsername {
 	text-align: left;
 	width: 15%;
 	border: black solid 1px;
   }
-
   .logContainer input#loginPsw {
 	text-align: left;
 	width: 15%;
 	border: black solid 1px;
   }
-
 	h2{
+		color: #444444;
 		text-align: center;
 		font-size: 32px;
 		font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 	}
-
   /* image in Login window */
   .imgContainer {
 	text-align: center;
 	margin: 24px 0 12px 0;
-  }
-  
+  }  
   img.loginImg {
 	width: 10%;
 	border-radius: 10%;
   }
-
   .submitLogBtn {
-	background-color: rgb(127, 185, 129);
-	color: white;	
 	border: none;
 	cursor: pointer;
 	width: 10%;
 	left: 45%;
 	top: 70%;
 	}
+	.submitLogBtn:hover {
+		transform: scale(1.05);
+	}
+
+/* End Login */
 
 footer{
 	position: absolute;
@@ -219,9 +183,7 @@ footer{
 }
 
 
-
-
-/* The Modal (background) */
+/* About - The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -267,68 +229,63 @@ footer{
 }
 
 /* Registration */
-body { 
-	font-family: sans-serif;
-	font-size:13px;
-	background:#CCCCCC;
-	color:#444444;
-}
-p { 
-	padding:2px 
+
+form#register_form p { 
+	padding:2px;
+	color: white;
 }
 #wrap { 
-	width:820px; 
-	padding:20px; 
-	margin:20px auto;
-	background:#fff;
+	width:720px; 
+	padding:15px; 
+	margin:15px auto;
+	background: #ccb639da;
 }
 div#wrap2 {
     border: 1px solid #CCCCCC;
-    margin-bottom: 10px;
-    padding:15px;
+	/* padding:15px; */
+	background: black;
 }
-h2.new_account {
-    color: #3399FF;
+h2.signUp {
+    color: #ccb639da;
     display: block;
-    margin-bottom: 25px;
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 form#register_form label { 
 	display:inline-block; /* with block na */
 	width:125px;
-	font-weight:bold;
+	margin-left:10px;
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
-form#register_form label:after { 
-	content:":"
-}
-form#register_form input[type='text'], input[type='password'], input[type='date'] { 
+
+form#register_form input[type='text'], input[type='password'], input[type='date'] {
 	display:inline-block; /* with block na */
 	width:200px;
-	border:1px solid #ccc;
+	border:2px solid #ccc;
 	margin:0;
 	padding:5px;
 }
-/* form#register_form input[name='submit'] { 
-	border:1px solid #3399FF;
-	background:#3399FF;
-	border-radius: 5px;
-	margin:10px;
-	color:#FFF;
-	padding:5px;
-	font-weight:bold
-} */
 
-/* form#register_form input[name='submit'] { 
-	cursor:pointer;
-} */
-
-/* Set a style for the submit button */
+/* submit button of registration */
 .submitBtn {
-background-color: rgb(127, 185, 129);
+	background-image: url("images/background.PNG");
+	color: white;
+	text-align: center;
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	font-size: 24px;
+	width: 15%;
+	height: 5%;
+	border-radius: 12px;
+	margin-bottom: 5px
+/* background-color: rgb(127, 185, 129);
 color: white;	
 border: none;
 cursor: pointer;
 width: 10%;
-left: 5%;
+left: 5%; */
+
+/* position: absolute; */
+/* background-color: white; */
 }
 
 .submitBtn:hover {
@@ -371,4 +328,37 @@ span.validate  {
 	display: table;
   }
 
+
+  /* Settings */
+
+  
+  #settings{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 14px;
+    color:#444444;
+  }
+
+  #properties{
+      float: left;
+      padding-top: 2.5%;
+      padding-left: 10%;
+  }
+
+  #buttons{
+      float: left;
+      padding-left: 25%;
+      padding-top: 10%;
+  }
+
+  #randomBtn:hover{
+    transform: scale(1.05);
+}
+
+#saveSettingsBtn:hover{
+    transform: scale(1.05);
+}
+
+#playBtn:hover{
+    transform: scale(1.05);
+}
  
