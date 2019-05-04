@@ -779,7 +779,6 @@ function updateGhostPosition(ghost){
     if (ghost.x == shape.i && ghost.y == shape.j) {
         score -= 10;
         lives--;
-        gameMusic.pause();
         
         if (lives == 0){
             clearAllIntervals();

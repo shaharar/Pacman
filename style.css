@@ -322,22 +322,20 @@ span.validate  {
 
   #properties1{
       float: left;
-      padding-top: 2.5%;
+      padding-top: 5%;
 	  padding-left: 5%;
-	  padding-top: 10%;
   }
 
   #properties2{
 	float: left;
-	padding-top: 2.5%;
+	padding-top: 5%;
 	padding-left: 5%;
-	padding-top: 10%;
 }
 
   #buttons{
       float: left;
       padding-left: 5%;
-      padding-top: 10%;
+      padding-top: 5%;
   }
 
   #randomBtn:hover{
