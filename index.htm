@@ -48,19 +48,25 @@
                 </div> 
             </div>
             <div id="login">
-                <form action="script:loginValdiation()">
+                <br>
                     <h2>Login</h2>
+                <form id=loginForm>
                     <!-- image on login -->
-                    <!-- <div class="imgcontainer">
-                        <img src="img_avatar2.png" alt="Avatar" class="avatar">
-                    </div> -->
-
+                    <div class="imgContainer">
+                        <img src="images/login2.PNG" alt="Login" class="loginImg">
+                    </div>
+                    <br>
                     <div class="logContainer">
-                        <label for="username"><b>Username</b></label>
-                        <input type="text" id="loginUsername" placeholder="Enter Username" name="username" >
-                        <label for="psw"><b>Password</b></label>
-                        <input type="password" id="loginPsw" placeholder="Enter Password" name="psw" >
-                        <button type="submit" class="submitBtn" onclick="loginValidation()">Login</button>
+                        <center>
+                            <label for="username"><b>Username: </b></label>
+                            <input type="text" id="loginUsername" placeholder="Enter Username" name="username" > 
+                            <br>
+                            <br>
+                            <label for="psw"><b>Password: </b></label>
+                            <input type="password" id="loginPsw" placeholder="Enter Password" name="psw" >
+                            <button type="submit" class="submitLogBtn" onclick="loginValidation()">Login</button>
+                            <!-- <input type="button" class="submitLogBtn" onclick="loginValidation()">Submit</input> -->
+                        </center>
                     </div>
                 </form>
             </div>
@@ -135,7 +141,13 @@
                  <!-- Modal content -->
                 <div class="modal-content">
                 <span class="close">&times;</span>
-                <p style="text-align: center">Shahar Arad & Yarden Halili</p>
+                <p style="text-align: center"> <b>Shahar Arad & Yarden Halili</b> <br>
+                    <br>
+                    We used jQuery (version 3.3.1) for the validation of the fields in the Registration form.<br>
+                    <br>
+                    We had difficulties in some parts of the game's logic.<br>
+                    <br>
+                    Template ???? </p>
                  </div>      
             </div>
 

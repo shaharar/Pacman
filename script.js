@@ -27,6 +27,12 @@ var numOfBall_5;
 var numOfBall_15;
 var numOfBall_25;
 
+var foodArr = new Array();
+var medicine = {x:-1, y:-1};
+var clock = {x:-1, y:-1};
+var lastRewardPos = -1;
+
+//IMAGES
 var rewardImg = new Image();
 rewardImg.src = 'images/lollipop2.png';
 var ghost1Img = new Image();
@@ -39,11 +45,13 @@ var medicineImg = new Image();
 medicineImg.src = 'images/medicine.png';
 var clockImg = new Image();
 clockImg.src = 'images/clock.png';
+var wallImg = new Image();
+wallImg.src = 'images/wallBlue.jpg';
 
-var foodArr = new Array();
-var medicine = {x:-1, y:-1};
-var clock = {x:-1, y:-1};
-var lastRewardPos = -1;
+
+//var audio = new Audio('sounds/ouch.wav');
+var victoryAudio = new Audio('sounds/victory.mp3');
+
 
 //SETTINGS
 var keyUp = 'ArrowUp';
@@ -68,7 +76,7 @@ function Start() {
     score = 0;
     lives = 3;
     time_elapsed = 0;
-    pac_color = "yellow";
+    pac_color = "#fff000";
     lastDirection = 0;
     var cnt = numOfColums*numOfRows;
     var pacman_remain = 1;
@@ -107,8 +115,8 @@ function Start() {
                 }
             }
             //initalize walls
-            else if ((i === 14 && j === 5) || (i === 14 && j === 6) || (i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 19 && j === 7) ||
-             (i === 6 && j === 2) || (i === 4 && j === 8) || (i === 5 && j === 8) || (i === 6 && j === 8) || (i === 7 && j === 8) || (i === 8 && j === 5) || (i === 9 && j === 5)) {
+            else if ((i === 14 && j === 5) || (i === 14 && j === 6) ||  (i === 14 && j === 4) ||  (i === 15 && j === 4) ||  (i === 16 && j === 4) || (i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 2 && j === 5)|| (i === 6 && j === 1) || (i === 18 && j === 7) || (i === 18 && j === 8) ||
+             (i === 6 && j === 2) || (i === 7 && j === 2) || (i === 8 && j === 2) || (i === 9 && j === 2) || (i === 4 && j === 8) || (i === 5 && j === 8) || (i === 6 && j === 8) || (i === 7 && j === 8) || (i === 8 && j === 5) || (i === 9 && j === 5)) {
                 board[i][j] = 4;
             //initialize balls (without classification by colors)
             } else {
@@ -270,7 +278,6 @@ function GetKeyPressed() {
 }
 
 function Draw(direction) {
-    console.log("draw");
     if (direction === 0){ 
         if (lastDirection !== 0){
             direction = lastDirection;
@@ -304,7 +311,7 @@ function Draw(direction) {
                     context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI);
                 }
                 context.lineTo(center.x, center.y);
-                context.fillStyle = pac_color; //color
+                context.fillStyle = pac_color; //color of pacman
                 context.fill();
                 context.beginPath();
                 lastDirection = direction;
@@ -333,10 +340,13 @@ function Draw(direction) {
                 context.fill();
             /* draw walls */
             } else if (board[i][j] === 4) {
-                context.beginPath();
-                context.rect(center.x - 30, center.y - 30, 60, 60);
-                context.fillStyle = "grey"; //color of wall
-                context.fill();
+                context.drawImage(wallImg, center.x - 30, center.y - 30, 60, 60);
+
+                // context.beginPath();
+                // context.rect(center.x - 30, center.y - 30, 60, 60);
+                // context.fillStyle = "MidnightBlue"; //color of wall
+                // context.fill();
+
             /* draw reward */
             } else if (board[i][j] === 5) {
                 context.drawImage(rewardImg, 60 * reward.x, 60 * reward.y, 60, 60);
@@ -458,13 +468,15 @@ function UpdatePosition() {
 
     if (time_elapsed >= totalDuration){
         gameMusic.pause();
-        if (score < 1500){
+        if (score < 150){
             clearAllIntervals();
             window.alert("You can do better, you gained only " + score + " points");
         }
         else{
             clearAllIntervals();
             window.alert("We have a Winner!!!");
+            gameMusic.pause();
+            victoryAudio.play();
         }
     }
 
@@ -753,6 +765,7 @@ function updateGhostPosition(ghost){
     if (ghost.x == shape.i && ghost.y == shape.j) {
         score -= 10;
         lives--;
+        gameMusic.pause();
         
         if (lives == 0){
             clearAllIntervals();
