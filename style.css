@@ -52,7 +52,7 @@ content{
 	top: 22%;
 	left: 0px;
 	width: 100%;
-	height: 75%;
+	height: 73%;
 }
 
 #welcome{
@@ -177,8 +177,9 @@ footer{
 	left: 0px;
 	width: 100%;
 	height: 5%;
-	background-color: blue;
+	background-color: black;
 }
+
 
 
 
@@ -328,3 +329,5 @@ span.validate  {
 	clear: both;
 	display: table;
   }
+
+ 
