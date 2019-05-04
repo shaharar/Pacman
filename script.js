@@ -68,9 +68,6 @@ var numOfMonsters;
 var validSettings;
 
 
-hideAllWindows();
-showWindow('welcome');
-
 function Start() {
     board = new Array();
     score = 0;
@@ -494,6 +491,20 @@ function sleep(milliseconds) {
     }
   }
 
+  function LoadWindow() {
+    if ((screen.width<1920) && (screen.height<1080)) 
+        {
+            var body=document.getElementById("body");
+            body.style.zoom="67.5%";
+        }
+    else
+        {
+             var body=document.getElementById("body");
+            body.style.zoom="100%";
+        }
+        hideAllWindows();
+        showWindow('welcome');
+}
 
 function showWindow(id){
     if (id != "game"){
