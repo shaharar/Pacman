@@ -357,12 +357,7 @@ canvas{
 	position: relative;
 	background: black;
 	border: 8px solid transparent;
-	border-image: url(images/wallBlue.jpg) 10% round;
-	margin-right: 45%;
-	margin-bottom: 35%;
-	margin-block-end: 20%;
-	/* margin-left: 20%; */
-	
+	border-image: url(images/wallBlue.jpg) 10% round;	
 }
 
 /* #gameInfo { */
@@ -445,7 +440,7 @@ canvas{
 
 
 #newGameBtn {
-	left: 80%;
+	left: 3%;
 	display: inline;
 	top: 40%;
 }
