@@ -22,7 +22,7 @@ var numOfRows = 10;
 
 var food_remain;
 var totalBalls;
-var gameMusic = document.getElementById("hmyAudio");
+var gameMusic = document.getElementById("myAudio");
 
 var numOfBall_5;
 var numOfBall_15;
@@ -234,6 +234,7 @@ function newGame() {
     clearAllIntervals();
     numOfBalls = totalBalls;
     time_remained = gameTime;
+    console.log(gameTime);
     Start();
     showWindow('game');
     gameMusic.currentTime = 0;
@@ -289,6 +290,7 @@ function Draw(direction) {
     lblScore.value = score;
     //lblTime.value = time_elapsed;
     lblTime.value = time_remained;
+    console.log("time remained at draw" +time_remained);
     lblLife.value = lives;
     for (var i = 0; i < numOfColums; i++) {
         for (var j = 0; j < numOfRows; j++) {
@@ -388,11 +390,14 @@ function UpdatePosition() {
         window.alert("Game completed");
         return;
     }
-    
+
+
     board[shape.i][shape.j] = 0;
     var x = GetKeyPressed();
+
+
     //up
-    if (x === 1) {
+     if (x === 1) {
         if (shape.j > 0 && board[shape.i][shape.j - 1] !== 4) {
             shape.j--;
         }
@@ -419,6 +424,10 @@ function UpdatePosition() {
     else {
         x = 0;
     }
+
+
+
+
     /* pacman ate food ball */
     if (board[shape.i][shape.j] === 1) {
         //check which kind of ball the pacman ate
@@ -471,6 +480,7 @@ function UpdatePosition() {
 
         pac_color = "green";
     }
+    
 
     /* ---End Of The Game--- */
 
@@ -520,17 +530,18 @@ function sleep(milliseconds) {
 function showWindow(id){
     if (id != "game"){
         clearAllIntervals();
-       // gameMusic.pause();
+       gameMusic.pause();
     }
-    if (id !== "about"){
-        hideAllWindows();
-    }
+    hideAllWindows();
+    // if (id !== "about"){
+    //     hideAllWindows();
+    // }
     if (id != "settings"){
         clearSettingsErrors();
     }
-    else{
-        about();
-    }
+    // else{
+    //     about();
+    // }
     $("#"+id).show();
 
 }
@@ -584,6 +595,11 @@ function loginValidation(){
 }
 
 function about(){
+    clearAllIntervals();
+    clearSettingsErrors();
+    $("#about").show();
+
+
     // Get the modal
 var modal = document.getElementById('myModal');
 
@@ -951,7 +967,7 @@ function setRandomGameSettings(){
      // gameTime = "" + totalDuration;
 
       //set number of monsters
-      numOfMonsters = Math.floor(Math.random() * 2) + 1;
+      numOfMonsters = Math.floor(Math.random() * 3) + 1;
 
       showRandomGameSettings();
 }

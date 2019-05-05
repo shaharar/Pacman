@@ -306,6 +306,7 @@ left: 5%; */
 
 .submitBtn:hover {
 opacity: 1;
+transform: scale(1.05);
 }
 
 p.validate_msg {
@@ -445,6 +446,10 @@ canvas{
 	left: 2%;
 	display: inline;
 	top: 40%;
+}
+
+#newGameBtn:hover{
+	transform: scale(1.05);
 }
 
 /* ----------------------------Footer----------------------------- */
