@@ -18,6 +18,7 @@ var ghost2;
 var ghost3;
 var numOfColums = 20;
 var numOfRows = 10;
+var errorFound = false;
 
 var food_remain;
 var totalBalls;
@@ -47,6 +48,7 @@ clockImg.src = 'images/clock.png';
 var wallImg = new Image();
 wallImg.src = 'images/wallBlue.jpg';
 
+//SOUNDS
 var gameAudio = new Audio('sounds/game.mp3');
 gameAudio.loop = true;
 var fruitAudio = new Audio('sounds/Fruit.mp3');
@@ -536,6 +538,10 @@ function showWindow(id){
     hideAllWindows();
     if (id != "settings"){
         clearSettingsErrors();
+    }
+    if (errorFound){
+        clearErrors();
+        clearInputs();
     }
     $("#"+id).show();
 
@@ -1112,9 +1118,7 @@ function playGame(){
 }
 jQuery(function($) {	
 	$("form#register_form input[name='submit']").click(function() {
-	
-	var errorFound = false;
-	
+		
 		var username 		= $("form#register_form input[name='username']").val();
 		var fname 			= $("form#register_form input[name='fname']").val();
 		var lname 			= $("form#register_form input[name='lname']").val();
@@ -1209,7 +1213,6 @@ jQuery(function($) {
 
 		//if errors were found
 		if(errorFound) {
-			// $("p.validate_msg").slideDown("fast");
 			return false;
 		}
 		// registration is valid - go to Login window
@@ -1218,7 +1221,7 @@ jQuery(function($) {
             usersMap.set(username,password);
             clearInputs();
 			showWindow('login');
-		}
+        }
 	});
 });
 
@@ -1226,6 +1229,18 @@ function clearInputs() {
     var divObjects = document.getElementById('register_form');
     var inputs = divObjects.getElementsByTagName('input');
     for (i = 0; i < inputs.length; i++) {
-        inputs[i].value = "";
+        if (inputs[i].name != 'submit'){
+            inputs[i].value = "";
+        }
     }
+}
+
+function clearErrors() {
+    $("span.val_username").html("");
+    $("span.val_pass").html("");
+    $("span.val_repass").html("");
+    $("span.val_fname").html("");
+    $("span.val_lname").html("");
+    $("span.val_email").html("");
+    $("span.val_birthdate").html("");
 }

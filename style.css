@@ -251,7 +251,7 @@ form#register_form p {
 	color: white;
 }
 #wrap { 
-	width:40%;
+	width:45%;
 	padding:15px; 
 	margin:15px auto;
 	background: #ccb639da;
@@ -268,10 +268,12 @@ h2.signUp {
 	margin-top: 10px;
 }
 form#register_form label { 
-	display:inline-block; /* with block na */
-	width:125px;
-	margin-left:20%;
-	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	display: inline-block; /* with block na */
+	width: 170px;
+	margin-left: 13%;
+	/* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
+	font-family: sans-serif;
+	font-size: 125%;
 }
 
 form#register_form input[type='text'], input[type='password'], input[type='date'] {
@@ -279,7 +281,7 @@ form#register_form input[type='text'], input[type='password'], input[type='date'
 	width:235px;
 	border:2px solid #ccc;
 	margin:0;
-	padding:5px;
+	padding:5px 9px;
 }
 
 /* submit button of registration */
