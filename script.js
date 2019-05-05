@@ -968,6 +968,8 @@ function setRandomGameSettings(){
       numOfMonsters = Math.floor(Math.random() * 3) + 1;
 
       showRandomGameSettings();
+
+
 }
 
 function showRandomGameSettings(){
@@ -991,7 +993,7 @@ function showRandomGameSettings(){
 
     //show number of monsters
     document.getElementById('numOfMonsters').value = numOfMonsters;
-    clearSettingsErrors();
+    // clearSettingsErrors();
 }
 
 function settingsValidation(){
@@ -1074,6 +1076,7 @@ function settingsValidation(){
     }
     else{
         document.getElementById("errorMsgNumOfMonsters").innerHTML = "";
+        console.log("valid");
     }
 
     return valid;
@@ -1090,9 +1093,12 @@ function getRandomColor(){
 
 function playGame(){
     if (!lblUsername.value){
-        window.alert("You should login in order to play.If you dont have an account sign up via register")
+        window.alert("You should login in order to play.If you dont have an account sign up via register");
+        return;
     }
-    else if (validSettings){
+    validSettings = settingsValidation();
+    if (validSettings){
+        setGameSettings();
         clearAllIntervals();
         numOfBalls = document.getElementById('numOfBalls').value;
         Start();
@@ -1101,7 +1107,8 @@ function playGame(){
         gameAudio.play();
     }
     else{
-        window.alert("You should either press save settings, set game settings or fix errors above in order to be able to play")
+        console.log(validSettings);
+        window.alert("You should either set game settings or fix errors above in order to be able to play")
     }
 }
 jQuery(function($) {	
