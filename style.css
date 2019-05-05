@@ -148,9 +148,10 @@ button{
 	display: block;
 	}
 	.logContainer input[type='text'], input[type='password'] {
-		padding: 12px 20px;
+		/* padding: 12px 20px;
 		margin: 8px 0;
-		box-sizing: border-box;
+		box-sizing: border-box; */
+		font-size: 16px;
 	}
 
   .logContainer input#loginUsername {
@@ -185,7 +186,7 @@ button{
 	cursor: pointer;
 	width: 10%;
 	left: 45%;
-	top: 83%;
+	top: 80%;
 	}
 	.submitLogBtn:hover {
 		transform: scale(1.05);
@@ -242,12 +243,15 @@ button{
 
 /* -------------------------Registration-------------------------- */
 
+#register {
+	margin-top: 5%;
+}
 form#register_form p { 
 	padding:2px;
 	color: white;
 }
 #wrap { 
-	width:720px; 
+	width:40%;
 	padding:15px; 
 	margin:15px auto;
 	background: #ccb639da;
@@ -266,13 +270,13 @@ h2.signUp {
 form#register_form label { 
 	display:inline-block; /* with block na */
 	width:125px;
-	margin-left:10px;
+	margin-left:20%;
 	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 form#register_form input[type='text'], input[type='password'], input[type='date'] {
 	display:inline-block; /* with block na */
-	width:200px;
+	width:235px;
 	border:2px solid #ccc;
 	margin:0;
 	padding:5px;
@@ -362,34 +366,26 @@ canvas{
 	position: relative;
 	background: black;
 	border: 8px solid transparent;
-	/* border-image: url(images/wallBlue.jpg) 10% round;	 */
+	border-image: url(images/wallBlue.jpg) 10% round;
+	/* margin-top: 0.7%;	 */
 }
-
-/* #gameInfo { */
-	/* float: left; */
-    /* white-space:nowrap;
-    font-size:15px;
-    font-family: 'Permanent Marker', cursive;
-    color: pink;
-    -webkit-text-stroke-width: 0.5px;
-    -webkit-text-stroke-color: black; */
-/* } */
 
 #gameInfo label {
 	display: inline;
     white-space:nowrap;
-    font-size:15px;
+    font-size: 150%;
 	/* font-family: 'Permanent Marker', cursive; */
 	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-	color: #ccb639da;
-	/* color: black; */
+	/* color: #ccb639da; */
+	color: black;
     -webkit-text-stroke-width: 0.5px;
-	-webkit-text-stroke-color: black;
-	/* -webkit-text-stroke-color:#ccb639da; */
+	/* -webkit-text-stroke-color: black; */
+	-webkit-text-stroke-color:#ccb639da;
 }
 
-#gameInfo input {    white-space:nowrap;
-	font-size: 16px;
+#gameInfo input {   
+	white-space:nowrap;
+	font-size: 150%;
 	height: 10px;
 }
 
@@ -445,7 +441,7 @@ canvas{
 
 
 #newGameBtn {
-	left: 3%;
+	left: 2%;
 	display: inline;
 	top: 40%;
 }
