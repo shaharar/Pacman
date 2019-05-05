@@ -1076,7 +1076,6 @@ function settingsValidation(){
     }
     else{
         document.getElementById("errorMsgNumOfMonsters").innerHTML = "";
-        console.log("valid");
     }
 
     return valid;
@@ -1107,7 +1106,6 @@ function playGame(){
         gameAudio.play();
     }
     else{
-        console.log(validSettings);
         window.alert("You should either set game settings or fix errors above in order to be able to play")
     }
 }
