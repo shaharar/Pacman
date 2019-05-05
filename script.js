@@ -76,6 +76,7 @@ function Start() {
     lives = 3;
     if (clockWasEaten){
         totalDuration = totalDuration - 10;
+        clockWasEaten = false;
     }
     time_remained = totalDuration;
     pac_color = "#fff000";
