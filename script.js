@@ -4,8 +4,9 @@ var board;
 var score;
 var lives;
 var pac_color;
-var start_time;
-var time_elapsed;
+//var start_time;
+//var time_elapsed;
+var time_remained;
 var interval;
 var rewardInterval;
 var ghostsInterval;
@@ -21,7 +22,7 @@ var numOfRows = 10;
 
 var food_remain;
 var totalBalls;
-var gameMusic = document.getElementById("myAudio");
+var gameMusic = document.getElementById("hmyAudio");
 
 var numOfBall_5;
 var numOfBall_15;
@@ -34,7 +35,7 @@ var lastRewardPos = -1;
 
 //IMAGES
 var rewardImg = new Image();
-rewardImg.src = 'images/lollipop2.png';
+rewardImg.src = 'images/lollipop.png';
 var ghost1Img = new Image();
 ghost1Img.src = 'images/blueGhost.png';
 var ghost2Img = new Image();
@@ -42,7 +43,7 @@ ghost2Img.src = 'images/redGhost.png';
 var ghost3Img = new Image();
 ghost3Img.src = 'images/yellowGhost.png';
 var medicineImg = new Image();
-medicineImg.src = 'images/medicine.png';
+medicineImg.src = 'images/heart2.png';
 var clockImg = new Image();
 clockImg.src = 'images/clock.png';
 var wallImg = new Image();
@@ -72,14 +73,17 @@ function Start() {
     board = new Array();
     score = 0;
     lives = 3;
-    time_elapsed = 0;
+    //time_elapsed = 0;
+    time_remained = totalDuration;
     pac_color = "#fff000";
     lastDirection = 0;
     var cnt = numOfColums*numOfRows;
     var pacman_remain = 1;
     food_remain = numOfBalls;
     totalBalls = numOfBalls;
-    start_time = new Date();
+    //start_time = new Date();
+    end_time = new Date();
+    end_time.setSeconds(end_time.getSeconds() + totalDuration);
     reward = {x:0, y:0};
     ghost1 = {x:19, y:9};
     ghost2 = {x:0, y:9};
@@ -229,6 +233,7 @@ function classifyBallsByColors (){
 function newGame() {
     clearAllIntervals();
     numOfBalls = totalBalls;
+    time_remained = gameTime;
     Start();
     showWindow('game');
     gameMusic.currentTime = 0;
@@ -282,7 +287,8 @@ function Draw(direction) {
     }
     context.clearRect(0, 0, canvas.width, canvas.height); //clean board
     lblScore.value = score;
-    lblTime.value = time_elapsed;
+    //lblTime.value = time_elapsed;
+    lblTime.value = time_remained;
     lblLife.value = lives;
     for (var i = 0; i < numOfColums; i++) {
         for (var j = 0; j < numOfRows; j++) {
@@ -361,7 +367,7 @@ function Draw(direction) {
             /* draw medicine */
             else if(board[i][j]==9)
             {
-                context.drawImage(medicineImg, 60 * medicine.x, 60 * medicine.y, 60, 60);
+                context.drawImage(medicineImg, 60 * medicine.x, 60 * medicine.y, 55, 55);
             }
             /* draw clock */
             else if(board[i][j]==10)
@@ -427,7 +433,6 @@ function UpdatePosition() {
             score += 25;
         }
         numOfBalls--;
-        console.log(numOfBalls);
     }
 
     /* pacman ate reward - gets bonus */
@@ -449,6 +454,8 @@ function UpdatePosition() {
     /* pacman ate clock - gets more time for game */
     if (shape.i == clock.x && shape.j == clock.y) {
         totalDuration += 10;
+        end_time.setSeconds(end_time.getSeconds() + 10);
+        //time_remained += 10;
         clock.x = -1;
         clock.y = -1;
         board[shape.i][shape.j] = 10;
@@ -456,24 +463,28 @@ function UpdatePosition() {
 
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
-    time_elapsed = (currentTime - start_time) / 1000;
-    if (totalDuration - time_elapsed <= 10) {
+    //time_elapsed = (currentTime - start_time) / 1000;
+    time_remained = (end_time - currentTime) / 1000;
+
+    //if (totalDuration - time_elapsed <= 10) {
+    if (time_remained <= 10 && lives == 1)  {
+
         pac_color = "green";
     }
 
     /* ---End Of The Game--- */
 
-    if (time_elapsed >= totalDuration && lives == 1){
+    //if (time_elapsed >= totalDuration){
+    if (time_remained < 0){
         gameMusic.pause();
         if (score < 150){
             clearAllIntervals();
             window.alert("You can do better, you gained only " + score + " points");
         }
         else{
+            victoryAudio.play();
             clearAllIntervals();
             window.alert("We have a Winner!!!");
-            gameMusic.pause();
-            victoryAudio.play();
         }
     }
 
@@ -509,7 +520,7 @@ function sleep(milliseconds) {
 function showWindow(id){
     if (id != "game"){
         clearAllIntervals();
-        gameMusic.pause();
+       // gameMusic.pause();
     }
     if (id !== "about"){
         hideAllWindows();
@@ -531,8 +542,6 @@ function hideAllWindows(){
     $("#settings").hide();
     $("#about").hide();
     $("#game").hide();
-    // window.clearInterval(interval);
-    // window.clearInterval(rewardInterval);
 }
 
 function clearAllIntervals() {
@@ -939,7 +948,7 @@ function setRandomGameSettings(){
       //set game duration
       gameTime = Math.floor(Math.random() * 840) + 60;
       totalDuration = gameTime;
-      gameTime = "" + totalDuration;
+     // gameTime = "" + totalDuration;
 
       //set number of monsters
       numOfMonsters = Math.floor(Math.random() * 2) + 1;
