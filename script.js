@@ -4,9 +4,8 @@ var board;
 var score;
 var lives;
 var pac_color;
-//var start_time;
-//var time_elapsed;
 var time_remained;
+var clockWasEaten = false;
 var interval;
 var rewardInterval;
 var ghostsInterval;
@@ -22,7 +21,7 @@ var numOfRows = 10;
 
 var food_remain;
 var totalBalls;
-var gameMusic = document.getElementById("myAudio");
+//var gameMusic = document.getElementById("myAudio");
 
 var numOfBall_5;
 var numOfBall_15;
@@ -49,9 +48,12 @@ clockImg.src = 'images/clock.png';
 var wallImg = new Image();
 wallImg.src = 'images/wallBlue.jpg';
 
-
-//var audio = new Audio('sounds/ouch.wav');
+var gameAudio = new Audio('sounds/game.mp3');
+gameAudio.loop = true;
+var fruitAudio = new Audio('sounds/Fruit.mp3');
+var crashAudio = new Audio('sounds/crash.mp3');
 var victoryAudio = new Audio('sounds/victory.mp3');
+var lossAudio = new Audio('sounds/gameOver1.mp3');
 
 
 //SETTINGS
@@ -73,7 +75,9 @@ function Start() {
     board = new Array();
     score = 0;
     lives = 3;
-    //time_elapsed = 0;
+    if (clockWasEaten){
+        totalDuration = totalDuration - 10;
+    }
     time_remained = totalDuration;
     pac_color = "#fff000";
     lastDirection = 0;
@@ -81,7 +85,6 @@ function Start() {
     var pacman_remain = 1;
     food_remain = numOfBalls;
     totalBalls = numOfBalls;
-    //start_time = new Date();
     end_time = new Date();
     end_time.setSeconds(end_time.getSeconds() + totalDuration);
     reward = {x:0, y:0};
@@ -231,14 +234,16 @@ function classifyBallsByColors (){
 }
 
 function newGame() {
+    // gameAudio.pause();
+    // gameAudio.load();
     clearAllIntervals();
     numOfBalls = totalBalls;
-    time_remained = gameTime;
-    console.log(gameTime);
     Start();
     showWindow('game');
-    gameMusic.currentTime = 0;
-    gameMusic.play();
+    // gameMusic.currentTime = 0;
+    // gameMusic.play();
+    gameAudio.load();
+    gameAudio.play();
 }
 
 function placePacmanRandomly(){
@@ -288,10 +293,8 @@ function Draw(direction) {
     }
     context.clearRect(0, 0, canvas.width, canvas.height); //clean board
     lblScore.value = score;
-    //lblTime.value = time_elapsed;
     lblTime.value = time_remained;
-    console.log("time remained at draw" +time_remained);
-    lblLife.value = lives;
+;   lblLife.value = lives;
     for (var i = 0; i < numOfColums; i++) {
         for (var j = 0; j < numOfRows; j++) {
             var center = new Object();
@@ -386,7 +389,8 @@ function UpdatePosition() {
 
     if (numOfBalls == 0) {
         clearAllIntervals();
-        gameMusic.pause();
+      //  gameMusic.pause();
+        gameAudio.pause();
         window.alert("Game completed");
         return;
     }
@@ -446,14 +450,17 @@ function UpdatePosition() {
 
     /* pacman ate reward - gets bonus */
     if (shape.i == reward.x && shape.j == reward.y) {
+        fruitAudio.play();
         score += 50;
         reward.x = -1;
         reward.y = -1;
         board[shape.i][shape.j] = 2;
+
     }
 
     /* pacman ate medicine - gets one more life */
     if (shape.i == medicine.x && shape.j == medicine.y) {
+        fruitAudio.play();
         lives++;
         medicine.x = -1;
         medicine.y = -1;
@@ -462,9 +469,10 @@ function UpdatePosition() {
 
     /* pacman ate clock - gets more time for game */
     if (shape.i == clock.x && shape.j == clock.y) {
+        fruitAudio.play();
         totalDuration += 10;
         end_time.setSeconds(end_time.getSeconds() + 10);
-        //time_remained += 10;
+        clockWasEaten = true;
         clock.x = -1;
         clock.y = -1;
         board[shape.i][shape.j] = 10;
@@ -472,21 +480,17 @@ function UpdatePosition() {
 
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
-    //time_elapsed = (currentTime - start_time) / 1000;
     time_remained = (end_time - currentTime) / 1000;
 
-    //if (totalDuration - time_elapsed <= 10) {
     if (time_remained <= 10 && lives == 1)  {
-
         pac_color = "green";
     }
     
 
     /* ---End Of The Game--- */
-
-    //if (time_elapsed >= totalDuration){
     if (time_remained < 0){
-        gameMusic.pause();
+       // gameMusic.pause();
+        gameAudio.pause();
         if (score < 150){
             clearAllIntervals();
             window.alert("You can do better, you gained only " + score + " points");
@@ -513,6 +517,8 @@ function sleep(milliseconds) {
   }
 
   function LoadWindow() {
+
+    
     if ((screen.width<1920) && (screen.height<1080)) 
         {
             var body=document.getElementById("body");
@@ -523,6 +529,7 @@ function sleep(milliseconds) {
              var body=document.getElementById("body");
             body.style.zoom="100%";
         }
+
         hideAllWindows();
         showWindow('welcome');
 }
@@ -530,7 +537,9 @@ function sleep(milliseconds) {
 function showWindow(id){
     if (id != "game"){
         clearAllIntervals();
-       gameMusic.pause();
+       //gameMusic.pause();
+       gameAudio.pause();
+
     }
     hideAllWindows();
     // if (id !== "about"){
@@ -760,6 +769,7 @@ function getGhostIdx(ghost) {
 }
 
 function updateGhostPosition(ghost){
+
     var col = ghost.x;
     var row = ghost.y;
 
@@ -804,21 +814,25 @@ function updateGhostPosition(ghost){
     if (ghost.x == shape.i && ghost.y == shape.j) {
         score -= 10;
         lives--;
-        
-        if (lives == 0){
+
+        if (lives == 0){            
+            lblLife.value = 0;
+            lblScore.value = score;
+            gameAudio.pause();
+            lossAudio.play();        
             clearAllIntervals();
-            gameMusic.pause();
             window.alert("You Lost!");
         }
         else{
             sleep(1000);
+            crashAudio.play();
+            sleep(1100);
             ghost1 = {x:19, y:9};
             ghost2 = {x:0, y:9};
             ghost3 = {x:19, y:0};
             placePacmanRandomly();
-        }
+       }
     }
-
 }
 
 function getGhostDirection(col, row){
@@ -964,7 +978,7 @@ function setRandomGameSettings(){
       //set game duration
       gameTime = Math.floor(Math.random() * 840) + 60;
       totalDuration = gameTime;
-     // gameTime = "" + totalDuration;
+      gameTime = "" + totalDuration;
 
       //set number of monsters
       numOfMonsters = Math.floor(Math.random() * 3) + 1;
@@ -1099,8 +1113,10 @@ function playGame(){
         numOfBalls = document.getElementById('numOfBalls').value;
         Start();
         showWindow('game');
-        gameMusic.currentTime = 0;
-        gameMusic.play();
+        // gameMusic.currentTime = 0;
+        // gameMusic.play();
+        gameAudio.load();
+        gameAudio.play();
     }
     else{
         window.alert("You should either press save settings, set game settings or fix errors above in order to be able to play")
