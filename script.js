@@ -457,13 +457,13 @@ function UpdatePosition() {
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
-    // if (score >= 20 && time_elapsed <= 10) {
-    //     pac_color = "green";
-    // }
+    if (totalDuration - time_elapsed <= 10) {
+        pac_color = "green";
+    }
 
     /* ---End Of The Game--- */
 
-    if (time_elapsed >= totalDuration){
+    if (time_elapsed >= totalDuration && lives == 1){
         gameMusic.pause();
         if (score < 150){
             clearAllIntervals();
@@ -477,9 +477,9 @@ function UpdatePosition() {
         }
     }
 
-    // else {
+    else {
         Draw(x);
-    // }
+    }
 }
 
 function sleep(milliseconds) {

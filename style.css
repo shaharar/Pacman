@@ -309,11 +309,12 @@ opacity: 1;
 }
 
 p.validate_msg {
-    border: 1px solid #FF0000;
-    font-weight: bold;
-    padding: 10px;
+  border: 1px solid #FF0000;
+  font-weight: bold;
+  padding: 10px;
 	display:none;
-	margin-bottom:25px
+	margin-bottom:25px;
+	text-align: center;
 }
 span.validate  {
 	color:#F00;
