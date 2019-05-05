@@ -994,7 +994,7 @@ function showRandomGameSettings(){
 
     //show number of monsters
     document.getElementById('numOfMonsters').value = numOfMonsters;
-    // clearSettingsErrors();
+    clearSettingsErrors();
 }
 
 function settingsValidation(){
