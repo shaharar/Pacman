@@ -383,9 +383,10 @@ function Draw(direction) {
 
 function UpdatePosition() {
 
-    if (numOfBalls == 0) {
+    if (numOfBalls <= 0) {
         clearAllIntervals();
         gameAudio.pause();
+        victoryAudio.play();
         window.alert("Game completed");
         return;
     }
@@ -930,7 +931,7 @@ function setGameSettings() {
             //set number of monsters
             numOfMonsters = document.getElementById('numOfMonsters').value;
     
-            window.alert("Your settings were saved.Press PLAY to start game");
+            window.alert("Your settings were saved.");
         }
         else{
             window.alert("Could not save settings.Press OK to see errors.")
@@ -969,8 +970,6 @@ function setRandomGameSettings(){
       numOfMonsters = Math.floor(Math.random() * 3) + 1;
 
       showRandomGameSettings();
-
-
 }
 
 function showRandomGameSettings(){
@@ -1105,6 +1104,7 @@ function playGame(){
         showWindow('game');
         gameAudio.load();
         gameAudio.play();
+        sleep(1000);
     }
     else{
         window.alert("You should either set game settings or fix errors above in order to be able to play")
