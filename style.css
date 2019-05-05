@@ -309,14 +309,14 @@ opacity: 1;
 transform: scale(1.05);
 }
 
-p.validate_msg {
+/* p.validate_msg {
   border: 1px solid #FF0000;
   font-weight: bold;
   padding: 10px;
 	display:none;
 	margin-bottom:25px;
 	text-align: center;
-}
+} */
 span.validate  {
 	color:#F00;
 	padding-left:8px;

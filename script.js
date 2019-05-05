@@ -1204,7 +1204,7 @@ jQuery(function($) {
 
 		//if errors were found
 		if(errorFound) {
-			$("p.validate_msg").slideDown("fast");
+			// $("p.validate_msg").slideDown("fast");
 			return false;
 		}
 		// registration is valid - go to Login window
