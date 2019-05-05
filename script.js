@@ -21,7 +21,6 @@ var numOfRows = 10;
 
 var food_remain;
 var totalBalls;
-//var gameMusic = document.getElementById("myAudio");
 
 var numOfBall_5;
 var numOfBall_15;
@@ -53,7 +52,7 @@ gameAudio.loop = true;
 var fruitAudio = new Audio('sounds/Fruit.mp3');
 var crashAudio = new Audio('sounds/crash.mp3');
 var victoryAudio = new Audio('sounds/victory.mp3');
-var lossAudio = new Audio('sounds/gameOver1.mp3');
+var lossAudio = new Audio('sounds/gameOver.mp3');
 
 
 //SETTINGS
@@ -234,14 +233,10 @@ function classifyBallsByColors (){
 }
 
 function newGame() {
-    // gameAudio.pause();
-    // gameAudio.load();
     clearAllIntervals();
     numOfBalls = totalBalls;
     Start();
     showWindow('game');
-    // gameMusic.currentTime = 0;
-    // gameMusic.play();
     gameAudio.load();
     gameAudio.play();
 }
@@ -389,7 +384,6 @@ function UpdatePosition() {
 
     if (numOfBalls == 0) {
         clearAllIntervals();
-      //  gameMusic.pause();
         gameAudio.pause();
         window.alert("Game completed");
         return;
@@ -489,7 +483,6 @@ function UpdatePosition() {
 
     /* ---End Of The Game--- */
     if (time_remained < 0){
-       // gameMusic.pause();
         gameAudio.pause();
         if (score < 150){
             clearAllIntervals();
@@ -518,7 +511,6 @@ function sleep(milliseconds) {
 
   function LoadWindow() {
 
-    
     if ((screen.width<1920) && (screen.height<1080)) 
         {
             var body=document.getElementById("body");
@@ -529,7 +521,6 @@ function sleep(milliseconds) {
              var body=document.getElementById("body");
             body.style.zoom="100%";
         }
-
         hideAllWindows();
         showWindow('welcome');
 }
@@ -537,20 +528,13 @@ function sleep(milliseconds) {
 function showWindow(id){
     if (id != "game"){
         clearAllIntervals();
-       //gameMusic.pause();
        gameAudio.pause();
 
     }
     hideAllWindows();
-    // if (id !== "about"){
-    //     hideAllWindows();
-    // }
     if (id != "settings"){
         clearSettingsErrors();
     }
-    // else{
-    //     about();
-    // }
     $("#"+id).show();
 
 }
@@ -1113,8 +1097,6 @@ function playGame(){
         numOfBalls = document.getElementById('numOfBalls').value;
         Start();
         showWindow('game');
-        // gameMusic.currentTime = 0;
-        // gameMusic.play();
         gameAudio.load();
         gameAudio.play();
     }
