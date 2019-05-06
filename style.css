@@ -269,7 +269,7 @@ h2.signUp {
 }
 form#register_form label { 
 	display: inline-block; /* with block na */
-	width: 170px;
+	width: 200px;
 	margin-left: 13%;
 	/* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
 	font-family: sans-serif;
@@ -294,16 +294,7 @@ form#register_form input[type='text'], input[type='password'], input[type='date'
 	width: 15%;
 	height: 5%;
 	border-radius: 12px;
-	margin-bottom: 5px
-/* background-color: rgb(127, 185, 129);
-color: white;	
-border: none;
-cursor: pointer;
-width: 10%;
-left: 5%; */
-
-/* position: absolute; */
-/* background-color: white; */
+	margin-bottom: 5px;
 }
 
 .submitBtn:hover {

@@ -18,7 +18,7 @@ var ghost2;
 var ghost3;
 var numOfColums = 20;
 var numOfRows = 10;
-var errorFound = false;
+var errors = false;
 
 var food_remain;
 var totalBalls;
@@ -539,7 +539,7 @@ function showWindow(id){
     if (id != "settings"){
         clearSettingsErrors();
     }
-    if (errorFound){
+    if (errors){
         clearErrors();
         clearInputs();
     }
@@ -1118,7 +1118,9 @@ function playGame(){
 }
 jQuery(function($) {	
 	$("form#register_form input[name='submit']").click(function() {
-		
+        
+        var errorFound = false;
+
 		var username 		= $("form#register_form input[name='username']").val();
 		var fname 			= $("form#register_form input[name='fname']").val();
 		var lname 			= $("form#register_form input[name='lname']").val();
@@ -1213,10 +1215,12 @@ jQuery(function($) {
 
 		//if errors were found
 		if(errorFound) {
+            errors = true;
 			return false;
 		}
 		// registration is valid - go to Login window
 		else{
+            errors = false;
             errorFound = false;
             usersMap.set(username,password);
             clearInputs();
