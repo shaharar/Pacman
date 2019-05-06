@@ -245,19 +245,18 @@ form#register_form p {
 	color: white;
 }
 #wrap { 
-	width:45%;
-	padding:15px; 
+	width:46%;
+	padding:17px; 
 	margin:15px auto;
 	background: #ccb639da;
 }
 div#wrap2 {
-    border: 1px solid #CCCCCC;
-	/* padding:15px; */
+  border: 1px solid #CCCCCC;
 	background: black;
 }
 h2.signUp {
-    color: #ccb639da;
-    display: block;
+  color: #ccb639da;
+  display: block;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	-webkit-text-stroke-width: 0.7px;
@@ -266,7 +265,7 @@ h2.signUp {
 form#register_form label { 
 	display: inline-block; /* with block na */
 	width: 200px;
-	margin-left: 13%;
+	margin-left: 9%;
 	/* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
 	font-family: sans-serif;
 	font-size: 125%;

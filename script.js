@@ -176,7 +176,7 @@ function Start() {
 
     rewardInterval = setInterval(updateRewardPosition, 500);
 
-    ghostsInterval = setInterval(moveGhosts, 500);
+    ghostsInterval = setInterval(moveGhosts, 450);
 }
 
 function classifyBallsByColors (){
