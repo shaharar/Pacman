@@ -5,6 +5,7 @@ var score;
 var lives;
 var pac_color;
 var time_remained;
+var delay;
 var clockWasEaten = false;
 var interval;
 var rewardInterval;
@@ -80,6 +81,7 @@ function Start() {
         totalDuration = totalDuration - 10;
         clockWasEaten = false;
     }
+    delay = 0;
     time_remained = totalDuration;
     pac_color = "#fff000";
     lastDirection = 0;
@@ -478,7 +480,7 @@ function UpdatePosition() {
 
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
-    time_remained = (end_time - currentTime) / 1000;
+    time_remained = ((end_time - currentTime) / 1000) + delay;
 
     if (time_remained <= 10 && lives == 1)  {
         pac_color = "green";
@@ -533,7 +535,6 @@ function showWindow(id){
     if (id != "game"){
         clearAllIntervals();
        gameAudio.pause();
-
     }
     hideAllWindows();
     if (id != "settings"){
@@ -818,7 +819,8 @@ function updateGhostPosition(ghost){
         else{
             sleep(1000);
             crashAudio.play();
-            sleep(1100);
+            sleep(1000);
+            delay += 2;
             ghost1 = {x:19, y:9};
             ghost2 = {x:0, y:9};
             ghost3 = {x:19, y:0};
@@ -937,7 +939,7 @@ function setGameSettings() {
             //set number of monsters
             numOfMonsters = document.getElementById('numOfMonsters').value;
     
-            window.alert("Your settings were saved.");
+            window.alert("Your settings were saved. Be ready to play!");
         }
         else{
             window.alert("Could not save settings.Press OK to see errors.")
@@ -1107,10 +1109,10 @@ function playGame(){
         clearAllIntervals();
         numOfBalls = document.getElementById('numOfBalls').value;
         Start();
+        sleep(1000);
         showWindow('game');
         gameAudio.load();
         gameAudio.play();
-        sleep(1000);
     }
     else{
         window.alert("You should either set game settings or fix errors above in order to be able to play")
