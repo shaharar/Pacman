@@ -260,6 +260,8 @@ h2.signUp {
     display: block;
 	margin-bottom: 10px;
 	margin-top: 10px;
+	-webkit-text-stroke-width: 0.7px;
+	-webkit-text-stroke-color:white;
 }
 form#register_form label { 
 	display: inline-block; /* with block na */
