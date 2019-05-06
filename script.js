@@ -167,7 +167,7 @@ function Start() {
             //initialize balls (without classification by colors)
             } else {
                 var randomNum = Math.random();
-                if (randomNum <= 1.0 * food_remain / cnt) {
+                if ((randomNum <= 1.0 * food_remain / cnt) && !(i === 0 && j === 0) && !(i === 0 && j === 9) && !(i === 19 && j === 0) && !(i === 19 && j === 9)) {
                     food_remain--;
                     board[i][j] = 1;
                 } else {
@@ -283,7 +283,7 @@ function UpdatePosition() {
         score += 50;
         reward.x = -1;
         reward.y = -1;
-        board[shape.i][shape.j] = 2;
+       // board[shape.i][shape.j] = 2;
     }
     /* pacman ate medicine - gets one more life */
     if (shape.i == medicine.x && shape.j == medicine.y) {
@@ -291,7 +291,6 @@ function UpdatePosition() {
         lives++;
         medicine.x = -1;
         medicine.y = -1;
-        board[shape.i][shape.j] = 9;
     }
     /* pacman ate clock - gets more time for game */
     if (shape.i == clock.x && shape.j == clock.y) {
@@ -301,7 +300,6 @@ function UpdatePosition() {
         clockWasEaten = true;
         clock.x = -1;
         clock.y = -1;
-        board[shape.i][shape.j] = 10;
     }
 
     board[shape.i][shape.j] = 2;

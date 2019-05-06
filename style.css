@@ -335,12 +335,12 @@ span.validate  {
   #properties2{
 	float: left;
 	/* padding-top: 5%; */
-	padding-left: 2%;
+	padding-left: 4%;
 }
 
   #buttons{
       float: left;
-      padding-left: 1%;
+      padding-left: 3%;
       padding-top: 5%;
   }
 
@@ -380,8 +380,8 @@ canvas{
 
 #gameInfo input {   
 	white-space:nowrap;
-	font-size: 150%;
-	height: 10px;
+	font-size: 140%;
+	height: 6px;
 }
 
 #lblLife {
