@@ -803,7 +803,6 @@ function loginValidation(){
 /* ---------------------------------ABOUT---------------------------------------- */
 
 function about(){
-    clearAllIntervals();
     clearSettingsErrors();
     $("#about").show();
 
