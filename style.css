@@ -102,7 +102,6 @@ button{
 
 /* --------------------Welcome---------------------- */
 #welcome{
-	/* visibility: hidden; */
 	position: absolute;
 	top: 0%;
 	left: 0px;
@@ -148,9 +147,6 @@ button{
 	display: block;
 	}
 	.logContainer input[type='text'], input[type='password'] {
-		/* padding: 12px 20px;
-		margin: 8px 0;
-		box-sizing: border-box; */
 		font-size: 16px;
 	}
 
@@ -192,8 +188,6 @@ button{
 		transform: scale(1.05);
 	}
 
-/* End Login */
-
 
 /* ------------------------------------About------------------------------------ */
 .modal {
@@ -217,7 +211,7 @@ button{
   padding: 20px;
   color: black;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  font-size:16px;
+  font-size: 18px;
   border: 7px solid rgb(56, 55, 55);
   width: 55%; /* Could be more or less, depending on screen size */
 }
@@ -302,21 +296,11 @@ opacity: 1;
 transform: scale(1.05);
 }
 
-/* p.validate_msg {
-  border: 1px solid #FF0000;
-  font-weight: bold;
-  padding: 10px;
-	display:none;
-	margin-bottom:25px;
-	text-align: center;
-} */
 span.validate  {
 	color:#F00;
 	padding-left:8px;
 	font-style:italic;
 }
-
-/* End Registration */
 
 
   /* ----------------------Settings-------------------------- */
@@ -350,12 +334,12 @@ span.validate  {
   #properties2{
 	float: left;
 	/* padding-top: 5%; */
-	padding-left: 3%;
+	padding-left: 2%;
 }
 
   #buttons{
       float: left;
-      padding-left: 2%;
+      padding-left: 1%;
       padding-top: 5%;
   }
 
