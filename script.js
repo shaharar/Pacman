@@ -229,7 +229,11 @@ function UpdatePosition() {
         window.alert("Game completed");
         return;
     }
-    board[shape.i][shape.j] = 0;
+
+    //save original position of the pacman
+    var pacmanX = shape.i; 
+    var pacmanY = shape.j;
+
     var x = GetKeyPressed();
 
     //up
@@ -281,9 +285,22 @@ function UpdatePosition() {
     if (shape.i == reward.x && shape.j == reward.y) {
         fruitAudio.play();
         score += 50;
+        if (lastRewardPos == 1){
+            console.log("last = 1");
+            var color = colorsBoard[shape.i][shape.j];   
+            if (color == color5P) {
+                score += 5;
+            }
+            else if (color == color15P){
+                score += 15;
+            }
+            else if (color == color25P){
+                score += 25;
+            }
+            numOfBalls--;
+        }
         reward.x = -1;
         reward.y = -1;
-       // board[shape.i][shape.j] = 2;
     }
     /* pacman ate medicine - gets one more life */
     if (shape.i == medicine.x && shape.j == medicine.y) {
@@ -302,6 +319,8 @@ function UpdatePosition() {
         clock.y = -1;
     }
 
+    board[pacmanX][pacmanY] = 0;
+    
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
     time_remained = ((end_time - currentTime) / 1000) + delay;
@@ -695,7 +714,7 @@ function classifyBallsByColors (){
                     ballColor = color25P;
                 }
 
-                //check if there were remained balls of that type
+                //check if this type of ball is over and there were remained balls of other types
                 while(ballsAmount == 0 && (numOfBall_5 + numOfBall_15 + numOfBall_25 > 0)){
                     randBallType = getRandomBallType();
                     if (randBallType == 0){
@@ -711,6 +730,7 @@ function classifyBallsByColors (){
                         ballColor = color25P;
                     }
                 }
+
                 colorsBoard[i][j] = ballColor;
                 if(ballsAmount == numOfBall_5){
                     numOfBall_5--;                        
