@@ -213,7 +213,7 @@ function Start() {
 
     interval = setInterval(UpdatePosition, 120);
 
-    rewardInterval = setInterval(updateRewardPosition, 500);
+    rewardInterval = setInterval(updateRewardPosition, 450);
 
     ghostsInterval = setInterval(moveGhosts, 450);
 
@@ -286,7 +286,6 @@ function UpdatePosition() {
         fruitAudio.play();
         score += 50;
         if (lastRewardPos == 1){
-            console.log("last = 1");
             var color = colorsBoard[shape.i][shape.j];   
             if (color == color5P) {
                 score += 5;
@@ -319,9 +318,9 @@ function UpdatePosition() {
         clock.y = -1;
     }
 
-    board[pacmanX][pacmanY] = 0;
-    
+    board[pacmanX][pacmanY] = 0;    
     board[shape.i][shape.j] = 2;
+
     var currentTime = new Date();
     time_remained = ((end_time - currentTime) / 1000) + delay;
 
